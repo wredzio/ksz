@@ -28,6 +28,10 @@ export const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug
     text,
     images[]{
       ...,
+       image{
+        ...,
+        asset->
+      },
       asset->,
       alt,
       aspectRatio

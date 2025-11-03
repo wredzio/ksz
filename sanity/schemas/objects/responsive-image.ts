@@ -9,6 +9,9 @@ export const responsiveImage = defineType({
       name: 'image',
       type: 'image',
       title: 'Grafika',
+      options: {
+        hotspot: true,
+      },
       fields: [
         defineField({
           name: 'alt',
