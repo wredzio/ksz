@@ -53,6 +53,26 @@ export const settingsType = defineType({
       group: 'footer',
     }),
     defineField({
+      name: 'footerLogo',
+      type: 'image',
+      title: 'Footer Logo',
+      description: 'Company logo for the footer section',
+      group: 'footer',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: 'footerImage',
+      type: 'image',
+      title: 'Footer Showcase Image',
+      description: 'Showcase image displayed in the footer (e.g., car photo)',
+      group: 'footer',
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
       name: 'nip',
       type: 'string',
       title: 'NIP',

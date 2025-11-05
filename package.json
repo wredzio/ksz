@@ -7,7 +7,7 @@
     "build": "next build --turbopack",
     "postbuild": "next-sitemap",
     "start": "next start",
-    "typegen": "dotenv -e .env.local -- sh -c 'cd ./sanity && sanity schema extract --enforce-required-fields --path=schemas/schema.json && cd .. && sanity typegen generate'",
+    "typegen": "cd sanity && dotenv -e ../.env.local -- sanity schema extract --enforce-required-fields --path=schemas/schema.json && cd .. && dotenv -e .env.local -- sanity typegen generate",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx,md,js}\"",
     "storybook": "storybook dev -p 6006",
