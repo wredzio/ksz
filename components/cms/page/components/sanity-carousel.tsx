@@ -10,9 +10,6 @@ type SanityCarouselProps = PageSectionItem<'carouselSection'>;
 export const SanityCarousel = (props: SanityCarouselProps) => {
   const section = props;
 
-  console.log('Rendering SanityCarousel with section:', section.images);
-  console.log('First image structure:', section.images?.[0]);
-
   // Transform images to CarouselItem[]
   const imageItems: CarouselItem[] =
     section.images?.map((img, index) => {

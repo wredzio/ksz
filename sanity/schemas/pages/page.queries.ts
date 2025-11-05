@@ -23,6 +23,7 @@ export const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug
   sections[]{
     _key,
     _type,
+    id,
     title,
     description,
     text,

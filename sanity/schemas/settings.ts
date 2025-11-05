@@ -12,6 +12,10 @@ export const settingsType = defineType({
       name: 'metadata',
     },
     {
+      title: 'Nawigacja',
+      name: 'navigation',
+    },
+    {
       title: 'Stopka',
       name: 'footer',
     },
@@ -33,6 +37,87 @@ export const settingsType = defineType({
       type: 'url',
       description: 'The main site url. Used to create canonical url',
       group: 'metadata',
+    }),
+    defineField({
+      name: 'navigation',
+      type: 'object',
+      title: 'Nawigacja',
+      group: 'navigation',
+      fields: [
+        defineField({
+          name: 'logo',
+          type: 'image',
+          title: 'Logo',
+          description: 'Logo wyświetlane w nagłówku (zalecane: 216x64px)',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            defineField({
+              name: 'alt',
+              type: 'string',
+              title: 'Tekst alternatywny',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          validation: (Rule) => Rule.required(),
+        }),
+        defineField({
+          name: 'navigationLinks',
+          type: 'array',
+          title: 'Linki nawigacyjne',
+          description: 'Linki wyświetlane w głównym menu',
+          of: [
+            {
+              type: 'object',
+              fields: [
+                {
+                  name: 'label',
+                  type: 'string',
+                  title: 'Etykieta',
+                  description: 'Tekst wyświetlany w menu',
+                  validation: (Rule) => Rule.required().max(30),
+                },
+                {
+                  name: 'href',
+                  type: 'string',
+                  title: 'Link',
+                  description: 'Ścieżka URL (np. /o-nas, /galeria) lub pełny URL',
+                  validation: (Rule) => Rule.required(),
+                },
+                {
+                  name: 'external',
+                  type: 'boolean',
+                  title: 'Link zewnętrzny',
+                  description: 'Zaznacz, jeśli link prowadzi poza stronę',
+                  initialValue: false,
+                },
+                {
+                  name: 'order',
+                  type: 'number',
+                  title: 'Kolejność',
+                  description: 'Kolejność wyświetlania (1, 2, 3...)',
+                  validation: (Rule) => Rule.required().integer().min(1),
+                },
+              ],
+              preview: {
+                select: {
+                  title: 'label',
+                  subtitle: 'href',
+                  order: 'order',
+                },
+                prepare({ title, subtitle, order }) {
+                  return {
+                    title: `${order}. ${title}`,
+                    subtitle: subtitle,
+                  };
+                },
+              },
+            },
+          ],
+          validation: (Rule) => Rule.required().min(1).max(6),
+        }),
+      ],
     }),
     defineField({
       name: 'phone',

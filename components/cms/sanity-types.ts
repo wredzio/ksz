@@ -47,6 +47,7 @@ export type CarouselSection = {
 
 export type SubheadingSection = {
   _type: 'subheadingSection';
+  id?: string;
   text: string;
 };
 
@@ -71,6 +72,7 @@ export type HeroSection = {
 
 export type ContactSection = {
   _type: 'contactSection';
+  id?: string;
   title: string;
   phone: string;
   address: string;
@@ -196,6 +198,28 @@ export type Settings = {
   _rev: string;
   title?: string;
   url?: string;
+  navigation?: {
+    logo: {
+      asset?: {
+        _ref: string;
+        _type: 'reference';
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: 'image';
+    };
+    navigationLinks: Array<{
+      label: string;
+      href: string;
+      external?: boolean;
+      order: number;
+      _key: string;
+    }>;
+  };
   phone?: string;
   mail?: string;
   address?: string;
@@ -366,7 +390,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/schemas/pages/page.queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title,  slug,  metadata{    metaTitle,    metaDescription,    keywords,    ogImage{      ...,      asset->    },    noIndex  },  sections[]{    _key,    _type,    title,    description,    text,    images[]{      ...,       image{        ...,        asset->      },      asset->,      alt,      aspectRatio    },    body[]{      ...,      _type == 'image' => {        ...,        asset->      }    },    image{      ...,      image{        ...,        asset->      },      aspectRatio    },    backgroundImage{      ...,      asset->    },    layout,    fullWidth,    phone,    address,    email,    showCtaCard,    ctaText,    instagramUrl,    ctaPosition,    _type == 'offerSection' => {      packages[]{        number,        subtitle,        title,        description,        price,        image{          image{            asset->,            alt,            hotspot          },          aspectRatio        }      },      additionalOption{        label,        price      },      defaultOpenPackage    }  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title,  slug,  metadata{    metaTitle,    metaDescription,    keywords,    ogImage{      ...,      asset->    },    noIndex  },  sections[]{    _key,    _type,    id,    title,    description,    text,    images[]{      ...,       image{        ...,        asset->      },      asset->,      alt,      aspectRatio    },    body[]{      ...,      _type == 'image' => {        ...,        asset->      }    },    image{      ...,      image{        ...,        asset->      },      aspectRatio    },    backgroundImage{      ...,      asset->    },    layout,    fullWidth,    phone,    address,    email,    showCtaCard,    ctaText,    instagramUrl,    ctaPosition,    _type == 'offerSection' => {      packages[]{        number,        subtitle,        title,        description,        price,        image{          image{            asset->,            alt,            hotspot          },          aspectRatio        }      },      additionalOption{        label,        price      },      defaultOpenPackage    }  }}
 export type PageQueryResult = {
   _id: string;
   _type: 'page';
@@ -414,6 +438,7 @@ export type PageQueryResult = {
     | {
         _key: string;
         _type: 'carouselSection';
+        id: null;
         title: string | null;
         description: null;
         text: null;
@@ -469,6 +494,7 @@ export type PageQueryResult = {
     | {
         _key: string;
         _type: 'contactSection';
+        id: string | null;
         title: string;
         description: null;
         text: null;
@@ -489,6 +515,7 @@ export type PageQueryResult = {
     | {
         _key: string;
         _type: 'heroSection';
+        id: null;
         title: string;
         description: string;
         text: null;
@@ -537,6 +564,7 @@ export type PageQueryResult = {
     | {
         _key: string;
         _type: 'imageSection';
+        id: null;
         title: string;
         description: null;
         text: null;
@@ -638,6 +666,7 @@ export type PageQueryResult = {
     | {
         _key: string;
         _type: 'offerSection';
+        id: null;
         title: null;
         description: null;
         text: null;
@@ -699,6 +728,7 @@ export type PageQueryResult = {
     | {
         _key: string;
         _type: 'subheadingSection';
+        id: string | null;
         title: null;
         description: null;
         text: string;
@@ -726,11 +756,140 @@ export type AllPagesQueryResult = Array<{
   slug: Slug;
 }>;
 
+// Source: ./sanity/schemas/settings.queries.ts
+// Variable: navigationQuery
+// Query: *[_type == "settings"][0]{  _id,  navigation{    logo{      ...,      asset->    },    navigationLinks[]{      label,      href,      external,      order    } | order(order asc)  }}
+export type NavigationQueryResult = {
+  _id: string;
+  navigation: {
+    logo: {
+      asset: {
+        _id: string;
+        _type: 'sanity.imageAsset';
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: 'image';
+    };
+    navigationLinks: Array<{
+      label: string;
+      href: string;
+      external: boolean | null;
+      order: number;
+    }>;
+  } | null;
+} | null;
+// Variable: settingsQuery
+// Query: *[_type == "settings"][0]{  _id,  title,  url,  description,  keywords,  openGraphImage{    ...,    asset->  },  navigation{    logo{      ...,      asset->    },    navigationLinks[]{      label,      href,      external,      order    } | order(order asc)  },  phone,  mail,  address,  nip,  bdo,  social[]{    media,    url  }}
+export type SettingsQueryResult = {
+  _id: string;
+  title: string | null;
+  url: string | null;
+  description: string | null;
+  keywords: Array<string>;
+  openGraphImage: {
+    asset: {
+      _id: string;
+      _type: 'sanity.imageAsset';
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: 'image';
+  } | null;
+  navigation: {
+    logo: {
+      asset: {
+        _id: string;
+        _type: 'sanity.imageAsset';
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: 'image';
+    };
+    navigationLinks: Array<{
+      label: string;
+      href: string;
+      external: boolean | null;
+      order: number;
+    }>;
+  } | null;
+  phone: string | null;
+  mail: string | null;
+  address: string | null;
+  nip: string | null;
+  bdo: string | null;
+  social: Array<{
+    media: 'Facebook' | 'Instagram' | 'Linkedin' | 'Twitter' | 'Youtube' | null;
+    url: string | null;
+  }> | null;
+} | null;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    title,\n    description,\n    text,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    backgroundImage{\n      ...,\n      asset->\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    showCtaCard,\n    ctaText,\n    instagramUrl,\n    ctaPosition,\n    _type == 'offerSection' => {\n      packages[]{\n        number,\n        subtitle,\n        title,\n        description,\n        price,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        }\n      },\n      additionalOption{\n        label,\n        price\n      },\n      defaultOpenPackage\n    }\n  }\n}": PageQueryResult;
+    "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    id,\n    title,\n    description,\n    text,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    backgroundImage{\n      ...,\n      asset->\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    showCtaCard,\n    ctaText,\n    instagramUrl,\n    ctaPosition,\n    _type == 'offerSection' => {\n      packages[]{\n        number,\n        subtitle,\n        title,\n        description,\n        price,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        }\n      },\n      additionalOption{\n        label,\n        price\n      },\n      defaultOpenPackage\n    }\n  }\n}": PageQueryResult;
     '*[_type == "page"]{\n  _id,\n  title,\n  slug\n}': AllPagesQueryResult;
+    '*[_type == "settings"][0]{\n  _id,\n  navigation{\n    logo{\n      ...,\n      asset->\n    },\n    navigationLinks[]{\n      label,\n      href,\n      external,\n      order\n    } | order(order asc)\n  }\n}': NavigationQueryResult;
+    '*[_type == "settings"][0]{\n  _id,\n  title,\n  url,\n  description,\n  keywords,\n  openGraphImage{\n    ...,\n    asset->\n  },\n  navigation{\n    logo{\n      ...,\n      asset->\n    },\n    navigationLinks[]{\n      label,\n      href,\n      external,\n      order\n    } | order(order asc)\n  },\n  phone,\n  mail,\n  address,\n  nip,\n  bdo,\n  social[]{\n    media,\n    url\n  }\n}': SettingsQueryResult;
   }
 }

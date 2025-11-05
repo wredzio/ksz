@@ -15,7 +15,6 @@ export const HeroSection = (props: HeroSectionProps) => {
     <section className='relative h-[500px] w-full overflow-hidden bg-background md:h-[600px] lg:h-[723px]'>
       <HeroMask />
 
-      {/* Masked Image on the right side - only visible through mask */}
       <div className='absolute top-0 right-0 h-full w-[60%] md:w-[55%] lg:w-[917px]'>
         <div
           className='absolute inset-0'

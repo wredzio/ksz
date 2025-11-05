@@ -9,7 +9,7 @@ type SanityHeroSectionProps = PageSectionItem<'heroSection'>;
 export const SanityHeroSection = (props: SanityHeroSectionProps) => {
   const section = props;
   return (
-    <PageSection key={section._key}>
+    <PageSection fullWidth key={section._key}>
       <HeroSection
         title={section.title}
         description={section.description}

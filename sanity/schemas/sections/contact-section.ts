@@ -6,6 +6,20 @@ export const contactSection = defineType({
   title: 'Contact Section',
   fields: [
     defineField({
+      name: 'id',
+      type: 'string',
+      title: 'ID sekcji (anchor)',
+      description: 'ID używane do linkowania (np. "kontakt" dla /#kontakt). Tylko małe litery i myślniki.',
+      validation: (Rule) =>
+        Rule.custom((value) => {
+          if (!value) return true; // ID jest opcjonalne
+          if (!/^[a-z0-9-]+$/.test(value)) {
+            return 'ID może zawierać tylko małe litery, cyfry i myślniki';
+          }
+          return true;
+        }),
+    }),
+    defineField({
       name: 'title',
       type: 'string',
       title: 'Tytuł',

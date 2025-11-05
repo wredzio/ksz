@@ -1,6 +1,9 @@
 import { ReactNode } from 'react';
 import { Metadata } from 'next';
 
+import { SanityPageHeader } from '@/components/cms/layout/sanity-page-header';
+import { getNavigationData } from '@/sanity/sanity.client';
+
 // import { getSettings } from '../../lib/sanity/studio/client';
 // import { urlForImage } from '../../lib/sanity/studio/image';
 
@@ -42,5 +45,13 @@ interface LayoutProps {
 }
 
 export default async function Layout({ children }: LayoutProps) {
-  return <>{children}</>;
+  // Fetch navigation data from Sanity
+  const navigationData = await getNavigationData();
+
+  return (
+    <>
+      {navigationData?.navigation && <SanityPageHeader data={navigationData} />}
+      <main>{children}</main>
+    </>
+  );
 }

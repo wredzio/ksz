@@ -7,7 +7,7 @@ type SanityContactSectionProps = PageSectionItem<'contactSection'>;
 export const SanityContactSection = (props: SanityContactSectionProps) => {
   const section = props;
   return (
-    <PageSection fullWidth key={section._key}>
+    <PageSection fullWidth key={section._key} id={section.id || undefined}>
       <ContactSection title={section.title} phone={section.phone} address={section.address} email={section.email} />
     </PageSection>
   );

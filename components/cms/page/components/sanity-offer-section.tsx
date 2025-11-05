@@ -29,7 +29,7 @@ export const SanityOfferSection = (props: SanityOfferSectionProps) => {
           className='object-cover'
           style={{ objectPosition }}
           sizes='(max-width: 976px) 100vw, 50vw'
-          priority={index === (section.defaultOpenPackage || 0)}
+          priority={false}
         />
       ) : null,
     };

@@ -7,7 +7,7 @@ type SanitySubheadingSectionProps = PageSectionItem<'subheadingSection'>;
 export const SanitySubheadingSection = (props: SanitySubheadingSectionProps) => {
   const section = props;
   return (
-    <PageSection key={section._key}>
+    <PageSection key={section._key} id={section.id || undefined}>
       <SubheadingSection text={section.text} />
     </PageSection>
   );
