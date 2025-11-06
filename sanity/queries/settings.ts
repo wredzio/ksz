@@ -9,26 +9,16 @@ export const settingsQuery = `
     address,
     mail,
     social,
-    footerLogo {
-      asset-> {
-        _id,
-        url
-      },
-      alt,
-      hotspot,
-      crop
-    },
     footerImage {
-      asset-> {
-        _id,
-        url
-      },
+      ...,
+      asset->,
       alt,
       hotspot,
       crop
     }
   }
 `;
+
 
 export type SettingsData = {
   _id: string;
@@ -43,15 +33,6 @@ export type SettingsData = {
     media: 'Facebook' | 'Instagram' | 'Twitter' | 'Linkedin' | 'Youtube';
     url: string;
   }>;
-  footerLogo?: {
-    asset: {
-      _id: string;
-      url: string;
-    };
-    alt?: string;
-    hotspot?: unknown;
-    crop?: unknown;
-  };
   footerImage?: {
     asset: {
       _id: string;

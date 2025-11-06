@@ -1,5 +1,8 @@
 import { ReactNode } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
+
+import { SiteLayout } from '../../components/layout/site-layout';
 
 // import { getSettings } from '../../lib/sanity/studio/client';
 // import { urlForImage } from '../../lib/sanity/studio/image';
@@ -42,5 +45,12 @@ interface LayoutProps {
 }
 
 export default async function Layout({ children }: LayoutProps) {
-  return <>{children}</>;
+  return (
+    <SiteLayout>
+      <SiteLayout.Header />
+      <SiteLayout.Main>{children}</SiteLayout.Main>
+      <SiteLayout.Footer />
+      <Analytics />
+    </SiteLayout>
+  );
 }
