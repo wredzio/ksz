@@ -27,7 +27,6 @@ export const SanityComponents = async <T extends PageType>(props: SanityComponen
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const Component = pageComponents[sanityComponentData._type];
-    console.log(Component);
     if (!Component) return null;
 
     return <Component key={sanityComponentData._key} {...sanityComponentData} />;

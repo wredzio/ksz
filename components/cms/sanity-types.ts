@@ -13,6 +13,24 @@
  */
 
 // Source: schema.json
+export type OfferSection = {
+  _type: 'offerSection';
+  packages: Array<{
+    number: string;
+    subtitle: string;
+    title: string;
+    description: string;
+    price: number;
+    image: ResponsiveImage;
+    _key: string;
+  }>;
+  additionalOption?: {
+    label: string;
+    price: number;
+  };
+  defaultOpenPackage?: number;
+};
+
 export type CarouselSection = {
   _type: 'carouselSection';
   title?: string;
@@ -25,6 +43,40 @@ export type CarouselSection = {
   ctaText?: string;
   instagramUrl?: string;
   ctaPosition?: number;
+};
+
+export type SubheadingSection = {
+  _type: 'subheadingSection';
+  id?: string;
+  text: string;
+};
+
+export type HeroSection = {
+  _type: 'heroSection';
+  title: string;
+  description: string;
+  backgroundImage: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: 'image';
+  };
+};
+
+export type ContactSection = {
+  _type: 'contactSection';
+  id?: string;
+  title: string;
+  phone: string;
+  address: string;
+  email: string;
 };
 
 export type BlockContentSection = Array<
@@ -71,24 +123,6 @@ export type ImageSection = {
   fullWidth?: boolean;
 };
 
-export type ResponsiveImage = {
-  _type: 'responsiveImage';
-  image: {
-    asset?: {
-      _ref: string;
-      _type: 'reference';
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: 'image';
-  };
-  aspectRatio: '3/4' | '9/16' | '1/1' | '4/3' | '3/2' | '13/5';
-};
-
 export type Page = {
   _id: string;
   _type: 'page';
@@ -119,11 +153,41 @@ export type Page = {
   sections: Array<
     | ({
         _key: string;
+      } & HeroSection)
+    | ({
+        _key: string;
       } & ImageSection)
     | ({
         _key: string;
+      } & ContactSection)
+    | ({
+        _key: string;
+      } & SubheadingSection)
+    | ({
+        _key: string;
       } & CarouselSection)
+    | ({
+        _key: string;
+      } & OfferSection)
   >;
+};
+
+export type ResponsiveImage = {
+  _type: 'responsiveImage';
+  image: {
+    asset?: {
+      _ref: string;
+      _type: 'reference';
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: 'image';
+  };
+  aspectRatio: '3/4' | '9/16' | '16/9' | '1/1' | '4/3' | '3/2' | '13/5';
 };
 
 export type Settings = {
@@ -134,6 +198,15 @@ export type Settings = {
   _rev: string;
   title?: string;
   url?: string;
+  navigation?: {
+    navigationLinks: Array<{
+      label: string;
+      href: string;
+      external?: boolean;
+      order: number;
+      _key: string;
+    }>;
+  };
   phone?: string;
   mail?: string;
   address?: string;
@@ -292,11 +365,15 @@ export type SanityAssetSourceData = {
 };
 
 export type AllSanitySchemaTypes =
+  | OfferSection
   | CarouselSection
+  | SubheadingSection
+  | HeroSection
+  | ContactSection
   | BlockContentSection
   | ImageSection
-  | ResponsiveImage
   | Page
+  | ResponsiveImage
   | Settings
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -312,7 +389,7 @@ export type AllSanitySchemaTypes =
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/schemas/pages/page.queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title,  slug,  metadata{    metaTitle,    metaDescription,    keywords,    ogImage{      ...,      asset->    },    noIndex  },  sections[]{    _key,    _type,    title,    description,    text,    images[]{      ...,      asset->,      alt,      aspectRatio    },    body[]{      ...,      _type == 'image' => {        ...,        asset->      }    },    image{      ...,      image{        ...,        asset->      },      aspectRatio    },    backgroundImage{      ...,      asset->    },    layout,    fullWidth,    phone,    address,    email,    showCtaCard,    ctaText,    instagramUrl,    ctaPosition  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title,  slug,  metadata{    metaTitle,    metaDescription,    keywords,    ogImage{      ...,      asset->    },    noIndex  },  sections[]{    _key,    _type,    id,    title,    description,    text,    images[]{      ...,       image{        ...,        asset->      },      asset->,      alt,      aspectRatio    },    body[]{      ...,      _type == 'image' => {        ...,        asset->      }    },    image{      ...,      image{        ...,        asset->      },      aspectRatio    },    backgroundImage{      ...,      asset->    },    layout,    fullWidth,    phone,    address,    email,    showCtaCard,    ctaText,    instagramUrl,    ctaPosition,    _type == 'offerSection' => {      packages[]{        number,        subtitle,        title,        description,        price,        image{          image{            asset->,            alt,            hotspot          },          aspectRatio        }      },      additionalOption{        label,        price      },      defaultOpenPackage    }  }}
 export type PageQueryResult = {
   _id: string;
   _type: 'page';
@@ -360,6 +437,7 @@ export type PageQueryResult = {
     | {
         _key: string;
         _type: 'carouselSection';
+        id: null;
         title: string | null;
         description: null;
         text: null;
@@ -367,19 +445,35 @@ export type PageQueryResult = {
           _key: string;
           _type: 'responsiveImage';
           image: {
-            asset?: {
-              _ref: string;
-              _type: 'reference';
-              _weak?: boolean;
-              [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
-            };
+            asset: {
+              _id: string;
+              _type: 'sanity.imageAsset';
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              originalFilename?: string;
+              label?: string;
+              title?: string;
+              description?: string;
+              altText?: string;
+              sha1hash?: string;
+              extension?: string;
+              mimeType?: string;
+              size?: number;
+              assetId?: string;
+              uploadId?: string;
+              path?: string;
+              url?: string;
+              metadata?: SanityImageMetadata;
+              source?: SanityAssetSourceData;
+            } | null;
             media?: unknown;
             hotspot?: SanityImageHotspot;
             crop?: SanityImageCrop;
             alt: string;
             _type: 'image';
           };
-          aspectRatio: '1/1' | '13/5' | '3/2' | '3/4' | '4/3' | '9/16';
+          aspectRatio: '1/1' | '13/5' | '16/9' | '3/2' | '3/4' | '4/3' | '9/16';
           asset: null;
           alt: null;
         }>;
@@ -398,7 +492,78 @@ export type PageQueryResult = {
       }
     | {
         _key: string;
+        _type: 'contactSection';
+        id: string | null;
+        title: string;
+        description: null;
+        text: null;
+        images: null;
+        body: null;
+        image: null;
+        backgroundImage: null;
+        layout: null;
+        fullWidth: null;
+        phone: string;
+        address: string;
+        email: string;
+        showCtaCard: null;
+        ctaText: null;
+        instagramUrl: null;
+        ctaPosition: null;
+      }
+    | {
+        _key: string;
+        _type: 'heroSection';
+        id: null;
+        title: string;
+        description: string;
+        text: null;
+        images: null;
+        body: null;
+        image: null;
+        backgroundImage: {
+          asset: {
+            _id: string;
+            _type: 'sanity.imageAsset';
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          _type: 'image';
+        };
+        layout: null;
+        fullWidth: null;
+        phone: null;
+        address: null;
+        email: null;
+        showCtaCard: null;
+        ctaText: null;
+        instagramUrl: null;
+        ctaPosition: null;
+      }
+    | {
+        _key: string;
         _type: 'imageSection';
+        id: null;
         title: string;
         description: null;
         text: null;
@@ -484,11 +649,94 @@ export type PageQueryResult = {
             alt: string;
             _type: 'image';
           };
-          aspectRatio: '1/1' | '13/5' | '3/2' | '3/4' | '4/3' | '9/16';
+          aspectRatio: '1/1' | '13/5' | '16/9' | '3/2' | '3/4' | '4/3' | '9/16';
         };
         backgroundImage: null;
         layout: 'left' | 'right';
         fullWidth: boolean | null;
+        phone: null;
+        address: null;
+        email: null;
+        showCtaCard: null;
+        ctaText: null;
+        instagramUrl: null;
+        ctaPosition: null;
+      }
+    | {
+        _key: string;
+        _type: 'offerSection';
+        id: null;
+        title: null;
+        description: null;
+        text: null;
+        images: null;
+        body: null;
+        image: null;
+        backgroundImage: null;
+        layout: null;
+        fullWidth: null;
+        phone: null;
+        address: null;
+        email: null;
+        showCtaCard: null;
+        ctaText: null;
+        instagramUrl: null;
+        ctaPosition: null;
+        packages: Array<{
+          number: string;
+          subtitle: string;
+          title: string;
+          description: string;
+          price: number;
+          image: {
+            image: {
+              asset: {
+                _id: string;
+                _type: 'sanity.imageAsset';
+                _createdAt: string;
+                _updatedAt: string;
+                _rev: string;
+                originalFilename?: string;
+                label?: string;
+                title?: string;
+                description?: string;
+                altText?: string;
+                sha1hash?: string;
+                extension?: string;
+                mimeType?: string;
+                size?: number;
+                assetId?: string;
+                uploadId?: string;
+                path?: string;
+                url?: string;
+                metadata?: SanityImageMetadata;
+                source?: SanityAssetSourceData;
+              } | null;
+              alt: string;
+              hotspot: SanityImageHotspot | null;
+            };
+            aspectRatio: '1/1' | '13/5' | '16/9' | '3/2' | '3/4' | '4/3' | '9/16';
+          };
+        }>;
+        additionalOption: {
+          label: string;
+          price: number;
+        } | null;
+        defaultOpenPackage: number | null;
+      }
+    | {
+        _key: string;
+        _type: 'subheadingSection';
+        id: string | null;
+        title: null;
+        description: null;
+        text: string;
+        images: null;
+        body: null;
+        image: null;
+        backgroundImage: null;
+        layout: null;
+        fullWidth: null;
         phone: null;
         address: null;
         email: null;
@@ -507,11 +755,74 @@ export type AllPagesQueryResult = Array<{
   slug: Slug;
 }>;
 
+// Source: ./sanity/schemas/settings.queries.ts
+// Variable: navigationQuery
+// Query: *[_type == "settings"][0]{  _id,  navigation{    navigationLinks[]{      label,      href,      external,      order    } | order(order asc)  }}
+export type NavigationQueryResult = {
+  _id: string;
+  navigation: {
+    navigationLinks: Array<{
+      label: string;
+      href: string;
+      external: boolean | null;
+      order: number;
+    }>;
+  } | null;
+} | null;
+// Variable: settingsQuery
+// Query: *[_type == "settings"][0] {    _id,    title,    description,    keywords,    url,    phone,    address,    mail,    social,    footerImage {      ...,      asset->,      alt,      hotspot,      crop    }  }
+export type SettingsQueryResult = {
+  _id: string;
+  title: string | null;
+  description: string | null;
+  keywords: Array<string>;
+  url: string | null;
+  phone: string | null;
+  address: string | null;
+  mail: string | null;
+  social: Array<{
+    media?: 'Facebook' | 'Instagram' | 'Linkedin' | 'Twitter' | 'Youtube';
+    url?: string;
+    _key: string;
+  }> | null;
+  footerImage: {
+    asset: {
+      _id: string;
+      _type: 'sanity.imageAsset';
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+    _type: 'image';
+    alt: null;
+  } | null;
+} | null;
+
 // Query TypeMap
 import '@sanity/client';
 declare module '@sanity/client' {
   interface SanityQueries {
-    '*[_type == "page" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    title,\n    description,\n    text,\n    images[]{\n      ...,\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == \'image\' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    backgroundImage{\n      ...,\n      asset->\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    showCtaCard,\n    ctaText,\n    instagramUrl,\n    ctaPosition\n  }\n}': PageQueryResult;
+    "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    id,\n    title,\n    description,\n    text,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    backgroundImage{\n      ...,\n      asset->\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    showCtaCard,\n    ctaText,\n    instagramUrl,\n    ctaPosition,\n    _type == 'offerSection' => {\n      packages[]{\n        number,\n        subtitle,\n        title,\n        description,\n        price,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        }\n      },\n      additionalOption{\n        label,\n        price\n      },\n      defaultOpenPackage\n    }\n  }\n}": PageQueryResult;
     '*[_type == "page"]{\n  _id,\n  title,\n  slug\n}': AllPagesQueryResult;
+    '*[_type == "settings"][0]{\n  _id,\n  navigation{\n    navigationLinks[]{\n      label,\n      href,\n      external,\n      order\n    } | order(order asc)\n  }\n}': NavigationQueryResult;
+    '\n  *[_type == "settings"][0] {\n    _id,\n    title,\n    description,\n    keywords,\n    url,\n    phone,\n    address,\n    mail,\n    social,\n    footerImage {\n      ...,\n      asset->,\n      alt,\n      hotspot,\n      crop\n    }\n  }\n': SettingsQueryResult;
   }
 }

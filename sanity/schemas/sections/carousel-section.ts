@@ -15,9 +15,16 @@ export const carouselSection = defineType({
       name: 'images',
       type: 'array',
       title: 'Zdjęcia',
-      of: [{ type: 'responsiveImage' }],
+      of: [
+        {
+          type: 'responsiveImage',
+          initialValue: {
+            aspectRatio: '1/1',
+          },
+        },
+      ],
       validation: (Rule) => Rule.min(1).required(),
-      description: 'Dodaj zdjęcia do karuzeli (zalecane: 3-6 zdjęć)',
+      description: 'Dodaj zdjęcia do karuzeli (zalecane kwadratowe 1:1, 3-6 zdjęć)',
     }),
     defineField({
       name: 'showCtaCard',

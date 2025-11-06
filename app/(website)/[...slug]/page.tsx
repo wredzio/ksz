@@ -13,7 +13,6 @@ export default async function Page({ params }: PageProps) {
   const { slug } = await params;
   const slugString = slug ? `/${slug.join('/')}` : '/';
 
-  console.log('Fetching page for slug:', slugString);
   const client = getClient();
   const page = await client.fetch<PageQueryResult>(pageQuery, { slug: slugString });
 

@@ -3,6 +3,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { Metadata } from 'next';
 
 import { SiteLayout } from '../../components/layout/site-layout';
+import { getNavigationData } from '../../sanity/sanity.client';
 
 // import { getSettings } from '../../lib/sanity/studio/client';
 // import { urlForImage } from '../../lib/sanity/studio/image';
@@ -45,9 +46,11 @@ interface LayoutProps {
 }
 
 export default async function Layout({ children }: LayoutProps) {
+  const navigationData = await getNavigationData();
+
   return (
     <SiteLayout>
-      <SiteLayout.Header />
+      <SiteLayout.Header navigationLinks={navigationData?.navigation?.navigationLinks ?? []} />
       <SiteLayout.Main>{children}</SiteLayout.Main>
       <SiteLayout.Footer />
       <Analytics />
