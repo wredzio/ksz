@@ -3,7 +3,6 @@ import { getSettings } from '@/sanity/lib/get-settings';
 
 export async function Footer() {
   const settings = await getSettings();
-  console.log(settings);
 
   if (!settings) {
     // Fallback footer jeśli nie ma danych z Sanity

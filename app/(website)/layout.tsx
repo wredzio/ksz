@@ -48,9 +48,15 @@ interface LayoutProps {
 export default async function Layout({ children }: LayoutProps) {
   const navigationData = await getNavigationData();
 
+  const navigationLinks = (navigationData?.navigation?.navigationLinks ?? []).map((link) => ({
+    label: link.label,
+    href: link.href,
+    external: link.external || false,
+  }));
+
   return (
     <SiteLayout>
-      <SiteLayout.Header navigationLinks={navigationData?.navigation?.navigationLinks ?? []} />
+      <SiteLayout.Header navigationLinks={navigationLinks} />
       <SiteLayout.Main>{children}</SiteLayout.Main>
       <SiteLayout.Footer />
       <Analytics />
