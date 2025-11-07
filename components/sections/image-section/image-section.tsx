@@ -21,10 +21,10 @@ export const ImageSection = (props: ImageSectionProps) => {
         })}
       >
         {/* Image section */}
-        <div className='w-full shrink-0 lg:max-w-[820px]'>{image}</div>
+        <div className='w-full shrink-0 lg:max-w-[640px]'>{image}</div>
 
         {/* Content section */}
-        <div className='flex grow flex-col gap-4 px-4 pt-8 pb-6 md:px-8 md:pt-12 md:pb-8 lg:gap-4 lg:pt-20 lg:pr-16 lg:pb-6 lg:pl-0'>
+        <div className='flex grow flex-col gap-4 px-4 pt-8 pb-6 md:px-8 md:pt-8 md:pb-8 lg:gap-4 lg:pt-12 lg:pr-16 lg:pb-6 lg:pl-0'>
           {/* Yellow accent line */}
           <div className='h-0.5 w-full bg-primary' />
 
