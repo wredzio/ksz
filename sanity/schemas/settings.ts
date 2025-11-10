@@ -130,18 +130,6 @@ export const settingsType = defineType({
       },
     }),
     defineField({
-      name: 'nip',
-      type: 'string',
-      title: 'NIP',
-      group: 'footer',
-    }),
-    defineField({
-      name: 'bdo',
-      type: 'string',
-      title: 'Bdo',
-      group: 'footer',
-    }),
-    defineField({
       group: 'footer',
       name: 'social',
       type: 'array',

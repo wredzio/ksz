@@ -222,8 +222,6 @@ export type Settings = {
     crop?: SanityImageCrop;
     _type: 'image';
   };
-  nip?: string;
-  bdo?: string;
   social?: Array<{
     media?: 'Twitter' | 'Facebook' | 'Instagram' | 'Linkedin' | 'Youtube';
     url?: string;

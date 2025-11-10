@@ -55,7 +55,7 @@ export const OfferSection = (props: OfferSectionProps) => {
     : 0;
 
   return (
-    <section ref={sectionRef} className='relative w-full bg-background'>
+    <section ref={sectionRef} className='relative w-full bg-background pt-8 md:pt-20 lg:pt-24'>
       <div className='grid lg:grid-cols-2'>
         {/* Left side - Car Image with crossfade animation */}
         <div className='relative aspect-video w-full lg:aspect-auto lg:self-stretch'>

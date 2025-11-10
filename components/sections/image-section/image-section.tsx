@@ -21,7 +21,7 @@ export const ImageSection = (props: ImageSectionProps) => {
         })}
       >
         {/* Image section */}
-        <div className='w-full shrink-0 lg:max-w-[640px]'>{image}</div>
+        <div className='w-full shrink-0 pt-8 md:pt-8 lg:max-w-[640px] lg:pt-12'>{image}</div>
 
         {/* Content section */}
         <div className='flex grow flex-col gap-4 px-4 pt-8 pb-6 md:px-8 md:pt-8 md:pb-8 lg:gap-4 lg:pt-12 lg:pr-16 lg:pb-6 lg:pl-0'>
@@ -34,7 +34,7 @@ export const ImageSection = (props: ImageSectionProps) => {
           </h3>
 
           {/* Description */}
-          <div className='font-montserrat text-lg leading-relaxed font-normal text-foreground md:text-xl lg:max-w-[507px] lg:text-2xl lg:leading-[1.2]'>
+          <div className='font-montserrat text-md leading-relaxed font-normal text-foreground md:text-lg lg:max-w-[507px] lg:text-xl lg:leading-[1.2]'>
             {description}
           </div>
         </div>
