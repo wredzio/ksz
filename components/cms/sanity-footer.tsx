@@ -20,11 +20,11 @@ export function SanityFooter(props: SanityFooterData) {
   console.log(props.footerImage);
   // Renderuj showcase image z Sanity lub fallback
   const showcaseImageComponent = props.footerImage?.image?.asset ? (
-    <ResponsiveImage 
-      loaderType='sanity' 
-      image={props.footerImage.image} 
+    <ResponsiveImage
+      loaderType='sanity'
+      image={props.footerImage.image}
       aspectRatio={props.footerImage.aspectRatio as any}
-      alt={props.footerImage.image.alt || 'Footer showcase image'} 
+      alt={props.footerImage.image.alt || 'Footer showcase image'}
     />
   ) : (
     <div className='flex h-full w-full items-center justify-center rounded-[10px] bg-gray-200'>
@@ -42,10 +42,12 @@ export function SanityFooter(props: SanityFooterData) {
         email: props.mail || '',
       }}
       socialLinks={
-        props.social?.map((social) => ({
-          platform: social.media as 'Facebook' | 'Instagram' | 'Twitter' | 'Linkedin' | 'Youtube',
-          url: social.url || '',
-        })).filter(social => social.url) || []
+        props.social
+          ?.map((social) => ({
+            platform: social.media as 'Facebook' | 'Instagram' | 'Twitter' | 'Linkedin' | 'Youtube',
+            url: social.url || '',
+          }))
+          .filter((social) => social.url) || []
       }
     />
   );
