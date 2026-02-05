@@ -35,7 +35,7 @@ export const ProjectsSection = (props: ProjectsSectionProps) => {
         </div>
 
         {/* Projects grid */}
-        <ul className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-12 md:grid-cols-2">
           {projects.map((project, index) => {
             const Wrapper = project.url ? "a" : "div";
             const wrapperProps = project.url
