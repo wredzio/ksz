@@ -66,12 +66,11 @@ export const InteractiveTerminal = ({
     }
   }, [lines, typedPrompt, showInput]);
 
-  // Auto-focus input
-  useEffect(() => {
+  const handleTerminalClick = () => {
     if (showInput && !isTyping) {
       inputRef.current?.focus();
     }
-  }, [showInput, isTyping]);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,8 +85,9 @@ export const InteractiveTerminal = ({
 
   return (
     <div
+      onClick={handleTerminalClick}
       className={cn(
-        "overflow-hidden rounded-xl border border-border bg-card",
+        "cursor-text overflow-hidden rounded-xl border border-border bg-card",
         className,
       )}
     >
