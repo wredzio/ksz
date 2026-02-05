@@ -95,6 +95,7 @@ export const pageType = defineType({
         { type: "processSection" },
         { type: "imageSection" },
         { type: "contactSection" },
+        { type: "contactFormSection" },
         { type: "subheadingSection" },
         { type: "faqSection" },
         { type: "teamSection" },

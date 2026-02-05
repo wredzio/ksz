@@ -2,6 +2,7 @@ import { responsiveImage } from "./objects/responsive-image";
 import { pageType } from "./pages/page";
 import { aboutSection } from "./sections/about-section";
 import { blockContentSection } from "./sections/block-content-section";
+import { contactFormSection } from "./sections/contact-form-section";
 import { contactSection } from "./sections/contact-section";
 import { faqSection } from "./sections/faq-section";
 import { heroSection } from "./sections/hero-section";
@@ -19,6 +20,7 @@ export const schemaTypes = [
   responsiveImage,
   imageSection,
   blockContentSection,
+  contactFormSection,
   contactSection,
   heroSection,
   subheadingSection,

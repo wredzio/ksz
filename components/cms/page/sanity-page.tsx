@@ -1,6 +1,7 @@
 import React from "react";
 
 import { SanityAboutSection } from "./components/sanity-about-section";
+import { SanityContactFormSection } from "./components/sanity-contact-form-section";
 import { SanityContactSection } from "./components/sanity-contact-section";
 import { SanityFaqSection } from "./components/sanity-faq-section";
 import { SanityHeroSection } from "./components/sanity-hero-section";
@@ -22,6 +23,7 @@ export const sanityPageComponents: Record<
   projectsSection: SanityProjectsSection,
   processSection: SanityProcessSection,
   imageSection: SanityImageSection,
+  contactFormSection: SanityContactFormSection,
   contactSection: SanityContactSection,
   subheadingSection: SanitySubheadingSection,
   faqSection: SanityFaqSection,

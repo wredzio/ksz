@@ -1,18 +1,23 @@
 import "../app/globals.css";
 
-import type { Preview } from "@storybook/nextjs";
+import type { Preview } from "@storybook/nextjs-vite";
 
 const preview: Preview = {
   parameters: {
     backgrounds: {
-      default: "dark",
-      values: [
-        { name: "dark", value: "rgb(10, 10, 15)" },
-        { name: "light", value: "#ffffff" },
-      ],
+      options: {
+        dark: { name: "dark", value: "rgb(10, 10, 15)" },
+        light: { name: "light", value: "#ffffff" }
+      }
     },
     layout: "fullscreen",
   },
+
+  initialGlobals: {
+    backgrounds: {
+      value: "dark"
+    }
+  }
 };
 
 export default preview;

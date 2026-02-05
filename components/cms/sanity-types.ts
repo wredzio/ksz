@@ -13,36 +13,78 @@
  */
 
 // Source: schema.json
-export type OfferSection = {
-  _type: "offerSection";
-  packages: Array<{
-    number: string;
-    subtitle: string;
-    title: string;
-    description: string;
-    price: number;
-    image: ResponsiveImage;
-    _key: string;
-  }>;
-  additionalOption?: {
-    label: string;
-    price: number;
-  };
-  defaultOpenPackage?: number;
+export type TeamSection = {
+  _type: "teamSection";
+  id?: string;
+  title: string;
+  description: string;
+  image: ResponsiveImage;
 };
 
-export type CarouselSection = {
-  _type: "carouselSection";
-  title?: string;
-  images: Array<
-    {
-      _key: string;
-    } & ResponsiveImage
-  >;
-  showCtaCard?: boolean;
-  ctaText?: string;
-  instagramUrl?: string;
-  ctaPosition?: number;
+export type FaqSection = {
+  _type: "faqSection";
+  id?: string;
+  title: string;
+  subtitle?: string;
+  items: Array<{
+    question: string;
+    answer: string;
+    _key: string;
+  }>;
+};
+
+export type ProcessSection = {
+  _type: "processSection";
+  id?: string;
+  title: string;
+  subtitle?: string;
+  steps: Array<{
+    number: string;
+    title: string;
+    description: string;
+    _key: string;
+  }>;
+};
+
+export type ProjectsSection = {
+  _type: "projectsSection";
+  id?: string;
+  title: string;
+  subtitle?: string;
+  projects: Array<{
+    title: string;
+    description: string;
+    image: ResponsiveImage;
+    url?: string;
+    tags?: Array<string>;
+    _key: string;
+  }>;
+};
+
+export type ServicesSection = {
+  _type: "servicesSection";
+  id?: string;
+  title: string;
+  subtitle?: string;
+  services: Array<{
+    title: string;
+    description: string;
+    icon: string;
+    _key: string;
+  }>;
+};
+
+export type AboutSection = {
+  _type: "aboutSection";
+  id?: string;
+  title: string;
+  description: string;
+  features: Array<{
+    icon: string;
+    title: string;
+    description: string;
+    _key: string;
+  }>;
 };
 
 export type SubheadingSection = {
@@ -55,19 +97,8 @@ export type HeroSection = {
   _type: "heroSection";
   title: string;
   description: string;
-  backgroundImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
+  ctaText?: string;
+  ctaHref?: string;
 };
 
 export type ContactSection = {
@@ -79,40 +110,44 @@ export type ContactSection = {
   email: string;
 };
 
-export type BlockContentSection = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-      listItem?: "bullet";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }
-  | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "image";
-      _key: string;
-    }
->;
+export type ContactFormSection = {
+  _type: "contactFormSection";
+  id?: string;
+  title: string;
+  subtitle?: string;
+};
+
+export type BlockContentSection = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  _type: "image";
+  _key: string;
+}>;
 
 export type ImageSection = {
   _type: "imageSection";
@@ -150,26 +185,29 @@ export type Page = {
     };
     noIndex?: boolean;
   };
-  sections: Array<
-    | ({
-        _key: string;
-      } & HeroSection)
-    | ({
-        _key: string;
-      } & ImageSection)
-    | ({
-        _key: string;
-      } & ContactSection)
-    | ({
-        _key: string;
-      } & SubheadingSection)
-    | ({
-        _key: string;
-      } & CarouselSection)
-    | ({
-        _key: string;
-      } & OfferSection)
-  >;
+  sections: Array<{
+    _key: string;
+  } & HeroSection | {
+    _key: string;
+  } & AboutSection | {
+    _key: string;
+  } & ServicesSection | {
+    _key: string;
+  } & ProjectsSection | {
+    _key: string;
+  } & ProcessSection | {
+    _key: string;
+  } & ImageSection | {
+    _key: string;
+  } & ContactSection | {
+    _key: string;
+  } & ContactFormSection | {
+    _key: string;
+  } & SubheadingSection | {
+    _key: string;
+  } & FaqSection | {
+    _key: string;
+  } & TeamSection>;
 };
 
 export type Settings = {
@@ -351,32 +389,11 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes =
-  | OfferSection
-  | CarouselSection
-  | SubheadingSection
-  | HeroSection
-  | ContactSection
-  | BlockContentSection
-  | ImageSection
-  | Page
-  | Settings
-  | ResponsiveImage
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityImageHotspot
-  | SanityImageCrop
-  | SanityFileAsset
-  | SanityImageAsset
-  | SanityImageMetadata
-  | Geopoint
-  | Slug
-  | SanityAssetSourceData;
+export type AllSanitySchemaTypes = TeamSection | FaqSection | ProcessSection | ProjectsSection | ServicesSection | AboutSection | SubheadingSection | HeroSection | ContactSection | ContactFormSection | BlockContentSection | ImageSection | Page | Settings | ResponsiveImage | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/schemas/pages/page.queries.ts
 // Variable: pageQuery
-// Query: *[_type == "page" && slug.current == $slug][0]{  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title,  slug,  metadata{    metaTitle,    metaDescription,    keywords,    ogImage{      ...,      asset->    },    noIndex  },  sections[]{    _key,    _type,    id,    title,    description,    text,    images[]{      ...,       image{        ...,        asset->      },      asset->,      alt,      aspectRatio    },    body[]{      ...,      _type == 'image' => {        ...,        asset->      }    },    image{      ...,      image{        ...,        asset->      },      aspectRatio    },    backgroundImage{      ...,      asset->    },    layout,    fullWidth,    phone,    address,    email,    showCtaCard,    ctaText,    instagramUrl,    ctaPosition,    _type == 'offerSection' => {      packages[]{        number,        subtitle,        title,        description,        price,        image{          image{            asset->,            alt,            hotspot          },          aspectRatio        }      },      additionalOption{        label,        price      },      defaultOpenPackage    }  }}
+// Query: *[_type == "page" && slug.current == $slug][0]{  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title,  slug,  metadata{    metaTitle,    metaDescription,    keywords,    ogImage{      ...,      asset->    },    noIndex  },  sections[]{    _key,    _type,    id,    title,    description,    text,    subtitle,    ctaText,    ctaHref,    images[]{      ...,       image{        ...,        asset->      },      asset->,      alt,      aspectRatio    },    body[]{      ...,      _type == 'image' => {        ...,        asset->      }    },    image{      ...,      image{        ...,        asset->      },      aspectRatio    },    layout,    fullWidth,    phone,    address,    email,    _type == 'aboutSection' => {      features[]{        _key,        icon,        title,        description      }    },    _type == 'servicesSection' => {      services[]{        _key,        title,        description,        icon      }    },    _type == 'projectsSection' => {      projects[]{        _key,        title,        description,        image{          image{            asset->,            alt,            hotspot          },          aspectRatio        },        url,        tags      }    },    _type == 'processSection' => {      steps[]{        _key,        number,        title,        description      }    },    _type == 'faqSection' => {      items[]{        _key,        question,        answer      }    }  }}
 export type PageQueryResult = {
   _id: string;
   _type: "page";
@@ -420,95 +437,251 @@ export type PageQueryResult = {
     } | null;
     noIndex: boolean | null;
   } | null;
-  sections: Array<
-    | {
+  sections: Array<{
+    _key: string;
+    _type: "aboutSection";
+    id: string | null;
+    title: string;
+    description: string;
+    text: null;
+    subtitle: null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+    features: Array<{
+      _key: string;
+      icon: string;
+      title: string;
+      description: string;
+    }>;
+  } | {
+    _key: string;
+    _type: "contactFormSection";
+    id: string | null;
+    title: string;
+    description: null;
+    text: null;
+    subtitle: string | null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+  } | {
+    _key: string;
+    _type: "contactSection";
+    id: string | null;
+    title: string;
+    description: null;
+    text: null;
+    subtitle: null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: string;
+    address: string;
+    email: string;
+  } | {
+    _key: string;
+    _type: "faqSection";
+    id: string | null;
+    title: string;
+    description: null;
+    text: null;
+    subtitle: string | null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+    items: Array<{
+      _key: string;
+      question: string;
+      answer: string;
+    }>;
+  } | {
+    _key: string;
+    _type: "heroSection";
+    id: null;
+    title: string;
+    description: string;
+    text: null;
+    subtitle: null;
+    ctaText: string | null;
+    ctaHref: string | null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+  } | {
+    _key: string;
+    _type: "imageSection";
+    id: null;
+    title: string;
+    description: null;
+    text: null;
+    subtitle: null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
         _key: string;
-        _type: "carouselSection";
-        id: null;
-        title: string | null;
-        description: null;
-        text: null;
-        images: Array<{
-          _key: string;
-          _type: "responsiveImage";
-          image: {
-            asset: {
-              _id: string;
-              _type: "sanity.imageAsset";
-              _createdAt: string;
-              _updatedAt: string;
-              _rev: string;
-              originalFilename?: string;
-              label?: string;
-              title?: string;
-              description?: string;
-              altText?: string;
-              sha1hash?: string;
-              extension?: string;
-              mimeType?: string;
-              size?: number;
-              assetId?: string;
-              uploadId?: string;
-              path?: string;
-              url?: string;
-              metadata?: SanityImageMetadata;
-              source?: SanityAssetSourceData;
-            } | null;
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            alt: string;
-            _type: "image";
-          };
-          aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
-          asset: null;
-          alt: null;
-        }>;
-        body: null;
-        image: null;
-        backgroundImage: null;
-        layout: null;
-        fullWidth: null;
-        phone: null;
-        address: null;
-        email: null;
-        showCtaCard: boolean | null;
-        ctaText: string | null;
-        instagramUrl: string | null;
-        ctaPosition: number | null;
-      }
-    | {
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        href?: string;
+        _type: "link";
         _key: string;
-        _type: "contactSection";
-        id: string | null;
-        title: string;
-        description: null;
-        text: null;
-        images: null;
-        body: null;
-        image: null;
-        backgroundImage: null;
-        layout: null;
-        fullWidth: null;
-        phone: string;
-        address: string;
-        email: string;
-        showCtaCard: null;
-        ctaText: null;
-        instagramUrl: null;
-        ctaPosition: null;
-      }
-    | {
-        _key: string;
-        _type: "heroSection";
-        id: null;
-        title: string;
-        description: string;
-        text: null;
-        images: null;
-        body: null;
-        image: null;
-        backgroundImage: {
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    } | {
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+      _key: string;
+    }>;
+    image: {
+      _type: "responsiveImage";
+      image: {
+        asset: {
+          _id: string;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          originalFilename?: string;
+          label?: string;
+          title?: string;
+          description?: string;
+          altText?: string;
+          sha1hash?: string;
+          extension?: string;
+          mimeType?: string;
+          size?: number;
+          assetId?: string;
+          uploadId?: string;
+          path?: string;
+          url?: string;
+          metadata?: SanityImageMetadata;
+          source?: SanityAssetSourceData;
+        } | null;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+      aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
+    };
+    layout: "left" | "right";
+    fullWidth: boolean | null;
+    phone: null;
+    address: null;
+    email: null;
+  } | {
+    _key: string;
+    _type: "processSection";
+    id: string | null;
+    title: string;
+    description: null;
+    text: null;
+    subtitle: string | null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+    steps: Array<{
+      _key: string;
+      number: string;
+      title: string;
+      description: string;
+    }>;
+  } | {
+    _key: string;
+    _type: "projectsSection";
+    id: string | null;
+    title: string;
+    description: null;
+    text: null;
+    subtitle: string | null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+    projects: Array<{
+      _key: string;
+      title: string;
+      description: string;
+      image: {
+        image: {
           asset: {
             _id: string;
             _type: "sanity.imageAsset";
@@ -531,215 +704,107 @@ export type PageQueryResult = {
             metadata?: SanityImageMetadata;
             source?: SanityAssetSourceData;
           } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
           alt: string;
-          _type: "image";
+          hotspot: SanityImageHotspot | null;
         };
-        layout: null;
-        fullWidth: null;
-        phone: null;
-        address: null;
-        email: null;
-        showCtaCard: null;
-        ctaText: null;
-        instagramUrl: null;
-        ctaPosition: null;
-      }
-    | {
-        _key: string;
-        _type: "imageSection";
-        id: null;
-        title: string;
-        description: null;
-        text: null;
-        images: null;
-        body: Array<
-          | {
-              children?: Array<{
-                marks?: Array<string>;
-                text?: string;
-                _type: "span";
-                _key: string;
-              }>;
-              style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-              listItem?: "bullet";
-              markDefs?: Array<{
-                href?: string;
-                _type: "link";
-                _key: string;
-              }>;
-              level?: number;
-              _type: "block";
-              _key: string;
-            }
-          | {
-              asset: {
-                _id: string;
-                _type: "sanity.imageAsset";
-                _createdAt: string;
-                _updatedAt: string;
-                _rev: string;
-                originalFilename?: string;
-                label?: string;
-                title?: string;
-                description?: string;
-                altText?: string;
-                sha1hash?: string;
-                extension?: string;
-                mimeType?: string;
-                size?: number;
-                assetId?: string;
-                uploadId?: string;
-                path?: string;
-                url?: string;
-                metadata?: SanityImageMetadata;
-                source?: SanityAssetSourceData;
-              } | null;
-              media?: unknown;
-              hotspot?: SanityImageHotspot;
-              crop?: SanityImageCrop;
-              alt?: string;
-              _type: "image";
-              _key: string;
-            }
-        >;
-        image: {
-          _type: "responsiveImage";
-          image: {
-            asset: {
-              _id: string;
-              _type: "sanity.imageAsset";
-              _createdAt: string;
-              _updatedAt: string;
-              _rev: string;
-              originalFilename?: string;
-              label?: string;
-              title?: string;
-              description?: string;
-              altText?: string;
-              sha1hash?: string;
-              extension?: string;
-              mimeType?: string;
-              size?: number;
-              assetId?: string;
-              uploadId?: string;
-              path?: string;
-              url?: string;
-              metadata?: SanityImageMetadata;
-              source?: SanityAssetSourceData;
-            } | null;
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            alt: string;
-            _type: "image";
-          };
-          aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
-        };
-        backgroundImage: null;
-        layout: "left" | "right";
-        fullWidth: boolean | null;
-        phone: null;
-        address: null;
-        email: null;
-        showCtaCard: null;
-        ctaText: null;
-        instagramUrl: null;
-        ctaPosition: null;
-      }
-    | {
-        _key: string;
-        _type: "offerSection";
-        id: null;
-        title: null;
-        description: null;
-        text: null;
-        images: null;
-        body: null;
-        image: null;
-        backgroundImage: null;
-        layout: null;
-        fullWidth: null;
-        phone: null;
-        address: null;
-        email: null;
-        showCtaCard: null;
-        ctaText: null;
-        instagramUrl: null;
-        ctaPosition: null;
-        packages: Array<{
-          number: string;
-          subtitle: string;
-          title: string;
-          description: string;
-          price: number;
-          image: {
-            image: {
-              asset: {
-                _id: string;
-                _type: "sanity.imageAsset";
-                _createdAt: string;
-                _updatedAt: string;
-                _rev: string;
-                originalFilename?: string;
-                label?: string;
-                title?: string;
-                description?: string;
-                altText?: string;
-                sha1hash?: string;
-                extension?: string;
-                mimeType?: string;
-                size?: number;
-                assetId?: string;
-                uploadId?: string;
-                path?: string;
-                url?: string;
-                metadata?: SanityImageMetadata;
-                source?: SanityAssetSourceData;
-              } | null;
-              alt: string;
-              hotspot: SanityImageHotspot | null;
-            };
-            aspectRatio:
-              | "1/1"
-              | "13/5"
-              | "16/9"
-              | "3/2"
-              | "3/4"
-              | "4/3"
-              | "9/16";
-          };
-        }>;
-        additionalOption: {
-          label: string;
-          price: number;
+        aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
+      };
+      url: string | null;
+      tags: Array<string> | null;
+    }>;
+  } | {
+    _key: string;
+    _type: "servicesSection";
+    id: string | null;
+    title: string;
+    description: null;
+    text: null;
+    subtitle: string | null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+    services: Array<{
+      _key: string;
+      title: string;
+      description: string;
+      icon: string;
+    }>;
+  } | {
+    _key: string;
+    _type: "subheadingSection";
+    id: string | null;
+    title: null;
+    description: null;
+    text: string;
+    subtitle: null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: null;
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+  } | {
+    _key: string;
+    _type: "teamSection";
+    id: string | null;
+    title: string;
+    description: string;
+    text: null;
+    subtitle: null;
+    ctaText: null;
+    ctaHref: null;
+    images: null;
+    body: null;
+    image: {
+      _type: "responsiveImage";
+      image: {
+        asset: {
+          _id: string;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          originalFilename?: string;
+          label?: string;
+          title?: string;
+          description?: string;
+          altText?: string;
+          sha1hash?: string;
+          extension?: string;
+          mimeType?: string;
+          size?: number;
+          assetId?: string;
+          uploadId?: string;
+          path?: string;
+          url?: string;
+          metadata?: SanityImageMetadata;
+          source?: SanityAssetSourceData;
         } | null;
-        defaultOpenPackage: number | null;
-      }
-    | {
-        _key: string;
-        _type: "subheadingSection";
-        id: string | null;
-        title: null;
-        description: null;
-        text: string;
-        images: null;
-        body: null;
-        image: null;
-        backgroundImage: null;
-        layout: null;
-        fullWidth: null;
-        phone: null;
-        address: null;
-        email: null;
-        showCtaCard: null;
-        ctaText: null;
-        instagramUrl: null;
-        ctaPosition: null;
-      }
-  >;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        alt: string;
+        _type: "image";
+      };
+      aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
+    };
+    layout: null;
+    fullWidth: null;
+    phone: null;
+    address: null;
+    email: null;
+  }>;
 } | null;
 // Variable: allPagesQuery
 // Query: *[_type == "page"]{  _id,  title,  slug}
@@ -764,7 +829,7 @@ export type NavigationQueryResult = {
   } | null;
 } | null;
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0] {    _id,    title,    description,    keywords,    url,    phone,    address,    mail,    social,    footerImage {      ...,      image {        ...,        asset->      }    }  }
+// Query: *[_type == "settings"][0] {    _id,    title,    description,    keywords,    url,    phone,    address,    mail,    social,    openGraphImage,    footerImage {      ...,      image {        ...,        asset->      }    }  }
 export type SettingsQueryResult = {
   _id: string;
   title: string | null;
@@ -779,6 +844,18 @@ export type SettingsQueryResult = {
     url?: string;
     _key: string;
   }> | null;
+  openGraphImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
   footerImage: {
     _type: "responsiveImage";
     image: {
@@ -818,9 +895,9 @@ export type SettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    id,\n    title,\n    description,\n    text,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    backgroundImage{\n      ...,\n      asset->\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    showCtaCard,\n    ctaText,\n    instagramUrl,\n    ctaPosition,\n    _type == 'offerSection' => {\n      packages[]{\n        number,\n        subtitle,\n        title,\n        description,\n        price,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        }\n      },\n      additionalOption{\n        label,\n        price\n      },\n      defaultOpenPackage\n    }\n  }\n}": PageQueryResult;
-    '*[_type == "page"]{\n  _id,\n  title,\n  slug\n}': AllPagesQueryResult;
-    '*[_type == "settings"][0]{\n  _id,\n  navigation{\n    navigationLinks[]{\n      label,\n      href,\n      external,\n      order\n    } | order(order asc)\n  }\n}': NavigationQueryResult;
-    '\n  *[_type == "settings"][0] {\n    _id,\n    title,\n    description,\n    keywords,\n    url,\n    phone,\n    address,\n    mail,\n    social,\n    footerImage {\n      ...,\n      image {\n        ...,\n        asset->\n      }\n    }\n  }\n': SettingsQueryResult;
+    "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    id,\n    title,\n    description,\n    text,\n    subtitle,\n    ctaText,\n    ctaHref,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    _type == 'aboutSection' => {\n      features[]{\n        _key,\n        icon,\n        title,\n        description\n      }\n    },\n    _type == 'servicesSection' => {\n      services[]{\n        _key,\n        title,\n        description,\n        icon\n      }\n    },\n    _type == 'projectsSection' => {\n      projects[]{\n        _key,\n        title,\n        description,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        },\n        url,\n        tags\n      }\n    },\n    _type == 'processSection' => {\n      steps[]{\n        _key,\n        number,\n        title,\n        description\n      }\n    },\n    _type == 'faqSection' => {\n      items[]{\n        _key,\n        question,\n        answer\n      }\n    }\n  }\n}": PageQueryResult;
+    "*[_type == \"page\"]{\n  _id,\n  title,\n  slug\n}": AllPagesQueryResult;
+    "*[_type == \"settings\"][0]{\n  _id,\n  navigation{\n    navigationLinks[]{\n      label,\n      href,\n      external,\n      order\n    } | order(order asc)\n  }\n}": NavigationQueryResult;
+    "\n  *[_type == \"settings\"][0] {\n    _id,\n    title,\n    description,\n    keywords,\n    url,\n    phone,\n    address,\n    mail,\n    social,\n    openGraphImage,\n    footerImage {\n      ...,\n      image {\n        ...,\n        asset->\n      }\n    }\n  }\n": SettingsQueryResult;
   }
 }
