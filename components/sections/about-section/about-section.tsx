@@ -33,9 +33,9 @@ export const AboutSection = (props: AboutSectionProps) => {
         </div>
 
         {/* Features grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {features.map((feature, index) => (
-            <div
+            <li
               key={index}
               className={cn(
                 "group rounded-xl border border-border bg-card p-8",
@@ -52,9 +52,9 @@ export const AboutSection = (props: AboutSectionProps) => {
               <p className="font-dm-sans text-sm leading-relaxed text-muted-foreground">
                 {feature.description}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

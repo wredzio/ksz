@@ -35,9 +35,9 @@ export const ServicesSection = (props: ServicesSectionProps) => {
         </div>
 
         {/* Services grid */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
-            <div
+            <li
               key={index}
               className={cn(
                 "group relative overflow-hidden rounded-xl border border-border bg-card p-8",
@@ -57,9 +57,9 @@ export const ServicesSection = (props: ServicesSectionProps) => {
               <p className="font-dm-sans text-sm leading-relaxed text-muted-foreground">
                 {service.description}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

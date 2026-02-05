@@ -49,14 +49,15 @@ export const ContactSection = (props: ContactSectionProps) => {
         </h2>
 
         {/* Contact Items */}
-        <div className="flex flex-col lg:justify-between lg:self-stretch">
+        <ul className="flex flex-col lg:justify-between lg:self-stretch">
           {contactItems.map((item, index) => (
-            <div key={index} className="flex grow basis-0 items-center gap-2">
+            <li key={index} className="flex grow basis-0 items-center gap-2">
               <div className="relative size-6 shrink-0">
                 <Icon
                   name={item.icon}
                   size={24}
                   className="text-primary-foreground"
+                  aria-hidden="true"
                 />
               </div>
               <p className="font-dm-sans text-base leading-[1.55] font-normal tracking-[0.03em] text-primary-foreground uppercase">
@@ -72,9 +73,9 @@ export const ContactSection = (props: ContactSectionProps) => {
                   <span>{item.value}</span>
                 )}
               </p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

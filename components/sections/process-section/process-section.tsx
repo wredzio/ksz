@@ -37,9 +37,9 @@ export const ProcessSection = (props: ProcessSectionProps) => {
           {/* Vertical line */}
           <div className="absolute top-0 left-6 hidden h-full w-px bg-gradient-to-b from-primary via-accent to-transparent md:left-1/2 md:block" />
 
-          <div className="flex flex-col gap-12">
+          <ol className="flex flex-col gap-12">
             {steps.map((step, index) => (
-              <div
+              <li
                 key={index}
                 className={cn(
                   "relative flex flex-col gap-4 md:flex-row md:items-center md:gap-12",
@@ -73,16 +73,16 @@ export const ProcessSection = (props: ProcessSectionProps) => {
 
                 {/* Number circle */}
                 <div className="absolute -top-6 left-4 z-10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-primary bg-background md:relative md:inset-auto">
-                  <span className="font-syne text-sm font-bold text-primary">
+                  <span className="font-syne text-sm font-bold text-primary" aria-hidden="true">
                     {step.number}
                   </span>
                 </div>
 
                 {/* Spacer for alternating layout */}
                 <div className="hidden flex-1 md:block" />
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </div>
     </div>

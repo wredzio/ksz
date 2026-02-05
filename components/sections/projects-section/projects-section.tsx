@@ -35,7 +35,7 @@ export const ProjectsSection = (props: ProjectsSectionProps) => {
         </div>
 
         {/* Projects grid */}
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <ul className="grid grid-cols-1 gap-8 md:grid-cols-2">
           {projects.map((project, index) => {
             const Wrapper = project.url ? "a" : "div";
             const wrapperProps = project.url
@@ -47,47 +47,48 @@ export const ProjectsSection = (props: ProjectsSectionProps) => {
               : {};
 
             return (
-              <Wrapper
-                key={index}
-                {...wrapperProps}
-                className={cn(
-                  "group relative overflow-hidden rounded-xl border border-border bg-card",
-                  "transition-all duration-300",
-                  "hover:border-primary/50 hover:neon-glow",
-                )}
-              >
-                {/* Image */}
-                <div className="relative aspect-video overflow-hidden">
-                  {project.image}
-                </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="font-syne mb-2 text-xl font-bold text-foreground">
-                    {project.title}
-                  </h3>
-                  <p className="font-dm-sans mb-4 text-sm leading-relaxed text-muted-foreground">
-                    {project.description}
-                  </p>
-
-                  {/* Tags */}
-                  {project.tags && project.tags.length > 0 && (
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className="rounded-full border border-primary/30 px-3 py-1 text-xs text-primary"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+              <li key={index}>
+                <Wrapper
+                  {...wrapperProps}
+                  className={cn(
+                    "group relative block overflow-hidden rounded-xl border border-border bg-card",
+                    "transition-all duration-300",
+                    "hover:border-primary/50 hover:neon-glow",
                   )}
-                </div>
-              </Wrapper>
+                >
+                  {/* Image */}
+                  <div className="relative aspect-video overflow-hidden">
+                    {project.image}
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <h3 className="font-syne mb-2 text-xl font-bold text-foreground">
+                      {project.title}
+                    </h3>
+                    <p className="font-dm-sans mb-4 text-sm leading-relaxed text-muted-foreground">
+                      {project.description}
+                    </p>
+
+                    {/* Tags */}
+                    {project.tags && project.tags.length > 0 && (
+                      <ul className="flex flex-wrap gap-2">
+                        {project.tags.map((tag, tagIndex) => (
+                          <li
+                            key={tagIndex}
+                            className="rounded-full border border-primary/30 px-3 py-1 text-xs text-primary"
+                          >
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </Wrapper>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </div>
   );

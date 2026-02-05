@@ -54,28 +54,28 @@ export function Footer({ contact, socialLinks }: FooterProps) {
             <div className="flex flex-col justify-start">
               <div className="flex flex-col gap-2">
                 <div className="mb-2">
-                  <h2 className="font-syne text-xl font-bold tracking-wider text-primary uppercase">
+                  <p className="font-syne text-xl font-bold tracking-wider text-primary uppercase">
                     Kontakt
-                  </h2>
+                  </p>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <address className="flex flex-col gap-3 not-italic">
                   <div className="flex items-center gap-2">
-                    <PhoneCall size={20} className="shrink-0 text-primary/70" />
+                    <PhoneCall size={20} className="shrink-0 text-primary/70" aria-hidden="true" />
                     <p className="font-dm-sans text-sm text-foreground/80">
                       Telefon: {contact.phone}
                     </p>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Building2 size={20} className="shrink-0 text-primary/70" />
+                    <Building2 size={20} className="shrink-0 text-primary/70" aria-hidden="true" />
                     <p className="font-dm-sans text-sm text-foreground/80">
                       Adres: {contact.address}
                     </p>
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Mail size={20} className="shrink-0 text-primary/70" />
+                    <Mail size={20} className="shrink-0 text-primary/70" aria-hidden="true" />
                     <p className="font-dm-sans text-sm text-foreground/80">
                       Mail:{" "}
                       <a
@@ -86,7 +86,7 @@ export function Footer({ contact, socialLinks }: FooterProps) {
                       </a>
                     </p>
                   </div>
-                </div>
+                </address>
               </div>
             </div>
           </div>
@@ -100,20 +100,23 @@ export function Footer({ contact, socialLinks }: FooterProps) {
 
             {/* Social Links */}
             {socialLinks.length > 0 && (
-              <div className="flex gap-3">
-                {socialLinks.map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="transition-transform hover:scale-110"
-                    aria-label={`Obserwuj nas na ${social.platform}`}
-                  >
-                    {getSocialIcon(social.platform)}
-                  </a>
-                ))}
-              </div>
+              <nav aria-label="Media społecznościowe">
+                <ul className="flex gap-3">
+                  {socialLinks.map((social, index) => (
+                    <li key={index}>
+                      <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-transform hover:scale-110"
+                        aria-label={`Obserwuj nas na ${social.platform}`}
+                      >
+                        {getSocialIcon(social.platform)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             )}
           </div>
         </div>

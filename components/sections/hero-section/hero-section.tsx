@@ -36,6 +36,9 @@ export const HeroSection = (props: HeroSectionProps) => {
         />
       </div>
 
+      {/* Bottom gradient fade into background */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-32 bg-gradient-to-t from-background to-transparent" />
+
       {/* Content overlay — pointer-events-none so mouse reaches the canvas */}
       <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-4">
         <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
