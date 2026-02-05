@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler/animated-theme-toggler";
 import { cn } from "@/lib/utils";
 
 export interface NavigationLink {
@@ -103,9 +104,10 @@ export const Header = ({ navigationLinks, className }: PageHeaderProps) => {
         aria-hidden="true"
         className={cn(
           "pointer-events-none absolute inset-0 rounded-[inherit]",
-          "border border-white/[0.08]",
-          "bg-[rgba(10,10,15,0.6)] backdrop-blur-xl",
-          "shadow-[0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.05)]",
+          "border border-foreground/[0.08]",
+          "bg-background/80 backdrop-blur-xl",
+          "shadow-[0_2px_8px_rgba(0,0,0,0.08)]",
+          "dark:shadow-[0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.05)]",
           "transition-opacity duration-300",
           isScrolled ? "opacity-100" : "opacity-0",
         )}
@@ -156,43 +158,48 @@ export const Header = ({ navigationLinks, className }: PageHeaderProps) => {
                 {link.label}
               </Link>
             ))}
+            <AnimatedThemeToggler />
           </div>
         </nav>
 
-        {/* Mobile Hamburger Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className={cn(
-            "flex size-10 items-center justify-center lg:hidden",
-            "rounded-full",
-            "transition-colors duration-200",
-            "hover:bg-white/[0.06]",
-            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
-          )}
-          aria-label="Menu"
-          aria-expanded={isMobileMenuOpen}
-        >
-          <div className="flex flex-col gap-1.5">
-            <span
-              className={cn(
-                "block h-0.5 w-6 bg-foreground transition-all duration-300",
-                isMobileMenuOpen && "translate-y-2 rotate-45",
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-6 bg-foreground transition-all duration-300",
-                isMobileMenuOpen && "opacity-0",
-              )}
-            />
-            <span
-              className={cn(
-                "block h-0.5 w-6 bg-foreground transition-all duration-300",
-                isMobileMenuOpen && "-translate-y-2 -rotate-45",
-              )}
-            />
-          </div>
-        </button>
+        {/* Mobile: Theme Toggle + Hamburger */}
+        <div className="flex items-center gap-1 lg:hidden">
+          <AnimatedThemeToggler />
+
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className={cn(
+              "flex size-10 items-center justify-center",
+              "rounded-full",
+              "transition-colors duration-200",
+              "hover:bg-foreground/[0.06]",
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+            )}
+            aria-label="Menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <div className="flex flex-col gap-1.5">
+              <span
+                className={cn(
+                  "block h-0.5 w-6 bg-foreground transition-all duration-300",
+                  isMobileMenuOpen && "translate-y-2 rotate-45",
+                )}
+              />
+              <span
+                className={cn(
+                  "block h-0.5 w-6 bg-foreground transition-all duration-300",
+                  isMobileMenuOpen && "opacity-0",
+                )}
+              />
+              <span
+                className={cn(
+                  "block h-0.5 w-6 bg-foreground transition-all duration-300",
+                  isMobileMenuOpen && "-translate-y-2 -rotate-45",
+                )}
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation Menu — CSS Grid height animation */}
@@ -204,7 +211,7 @@ export const Header = ({ navigationLinks, className }: PageHeaderProps) => {
         )}
       >
         <div className="overflow-hidden">
-          <div className="border-t border-white/[0.06]">
+          <div className="border-t border-foreground/[0.06]">
             <nav
               className="flex flex-col gap-1 py-3"
               aria-label="Nawigacja mobilna"

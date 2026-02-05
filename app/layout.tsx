@@ -17,13 +17,18 @@ const syne = Syne({
   display: "swap",
 });
 
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t==="light")return;document.documentElement.classList.add("dark")}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html lang="pl" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className={`${dmSans.variable} ${syne.variable} antialiased`}>
         {children}
       </body>

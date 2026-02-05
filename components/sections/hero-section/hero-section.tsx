@@ -19,10 +19,31 @@ export const HeroSection = (props: HeroSectionProps) => {
 
   return (
     <section className="relative h-dvh w-full overflow-hidden bg-background">
-      {/* FloatingLines background */}
-      <div className="absolute inset-0">
+      {/* FloatingLines — light mode */}
+      <div className="absolute inset-0 dark:hidden">
+        <FloatingLines
+          linesGradient={["#00aa6e", "#7c3aed", "#0891b2"]}
+          backgroundColor="#fafafc"
+          lineIntensity={2.0}
+          mixBlend={true}
+          enabledWaves={["middle", "bottom"]}
+          lineCount={[2, 2]}
+          lineDistance={[88.5, 88.5]}
+          bendRadius={14}
+          bendStrength={-1.0}
+          animationSpeed={0.8}
+          interactive={true}
+          parallax={true}
+          parallaxStrength={0.15}
+          className="h-full w-full"
+        />
+      </div>
+
+      {/* FloatingLines — dark mode */}
+      <div className="absolute inset-0 hidden dark:block">
         <FloatingLines
           linesGradient={["#00ffaa", "#8a2be2", "#00d4ff"]}
+          backgroundColor="#0a0a0f"
           enabledWaves={["middle", "bottom"]}
           lineCount={[2, 2]}
           lineDistance={[88.5, 88.5]}

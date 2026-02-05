@@ -55,6 +55,9 @@ uniform vec2 parallaxOffset;
 
 uniform vec3 lineGradient[8];
 uniform int lineGradientCount;
+uniform vec3 bgColor;
+uniform float lineIntensity;
+uniform bool useMixBlend;
 
 const vec3 BLACK = vec3(0.0);
 const vec3 PINK  = vec3(233.0, 71.0, 245.0) / 255.0;
@@ -90,7 +93,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
     vec3 c2 = lineGradient[idx2];
     gradientColor = mix(c1, c2, f);
   }
-  return gradientColor * 0.5;
+  return gradientColor;
 }
 
 float wave(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldBend) {
@@ -115,8 +118,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   if (parallax) {
     baseUv += parallaxOffset;
   }
-  vec3 col = vec3(0.0);
-  vec3 b = lineGradientCount > 0 ? vec3(0.0) : background_color(baseUv);
+  vec3 col = bgColor;
+  vec3 b = lineGradientCount > 0 ? bgColor : background_color(baseUv);
   vec2 mouseUv = vec2(0.0);
   if (interactive) {
     mouseUv = (2.0 * iMouse - iResolution.xy) / iResolution.y;
@@ -129,10 +132,15 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       vec3 lineCol = getLineColor(t, b);
       float angle = bottomWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
-      col += lineCol * wave(
+      float w = wave(
         ruv + vec2(bottomLineDistance * fi + bottomWavePosition.x, bottomWavePosition.y),
         1.5 + 0.2 * fi, baseUv, mouseUv, interactive
       ) * 0.2;
+      if (useMixBlend) {
+        col = mix(col, lineCol, clamp(w * lineIntensity, 0.0, 1.0));
+      } else {
+        col += lineCol * lineIntensity * w;
+      }
     }
   }
   if (enableMiddle) {
@@ -142,10 +150,15 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       vec3 lineCol = getLineColor(t, b);
       float angle = middleWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
-      col += lineCol * wave(
+      float w = wave(
         ruv + vec2(middleLineDistance * fi + middleWavePosition.x, middleWavePosition.y),
         2.0 + 0.15 * fi, baseUv, mouseUv, interactive
       );
+      if (useMixBlend) {
+        col = mix(col, lineCol, clamp(w * lineIntensity, 0.0, 1.0));
+      } else {
+        col += lineCol * lineIntensity * w;
+      }
     }
   }
   if (enableTop) {
@@ -156,10 +169,15 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
       float angle = topWavePosition.z * log(length(baseUv) + 1.0);
       vec2 ruv = baseUv * rotate(angle);
       ruv.x *= -1.0;
-      col += lineCol * wave(
+      float w = wave(
         ruv + vec2(topLineDistance * fi + topWavePosition.x, topWavePosition.y),
         1.0 + 0.2 * fi, baseUv, mouseUv, interactive
       ) * 0.1;
+      if (useMixBlend) {
+        col = mix(col, lineCol, clamp(w * lineIntensity, 0.0, 1.0));
+      } else {
+        col += lineCol * lineIntensity * w;
+      }
     }
   }
   fragColor = vec4(col, 1.0);
@@ -184,6 +202,9 @@ interface WavePosition {
 
 interface FloatingLinesProps {
   linesGradient?: string[];
+  backgroundColor?: string;
+  lineIntensity?: number;
+  mixBlend?: boolean;
   enabledWaves?: WaveType[];
   lineCount?: number | number[];
   lineDistance?: number | number[];
@@ -222,6 +243,9 @@ function hexToVec3(hex: string): Vector3 {
 
 export function FloatingLines({
   linesGradient,
+  backgroundColor = "#000000",
+  lineIntensity = 0.5,
+  mixBlend = false,
   enabledWaves = ["top", "middle", "bottom"],
   lineCount = [6],
   lineDistance = [5],
@@ -340,6 +364,9 @@ export function FloatingLines({
         ),
       },
       lineGradientCount: { value: 0 },
+      bgColor: { value: hexToVec3(backgroundColor) },
+      lineIntensity: { value: lineIntensity },
+      useMixBlend: { value: mixBlend },
     };
 
     if (linesGradient && linesGradient.length > 0) {

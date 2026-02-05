@@ -43,7 +43,7 @@ export const FaqSection = ({ title, subtitle, items }: FaqSectionProps) => {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="mb-3 overflow-visible rounded-xl border border-[rgba(30,30,50,0.5)] bg-[rgba(14,20,47,0.42)] last:border-b"
+              className="mb-3 overflow-visible rounded-xl border border-border bg-card last:border-b"
             >
               <AccordionTrigger className="px-6 py-5 font-syne text-base font-bold hover:no-underline">
                 {item.question}
