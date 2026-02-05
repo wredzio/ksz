@@ -1,29 +1,23 @@
-import Image from 'next/image';
+import { PageSection } from "@/components/layout/page-section/page-section";
+import { HeroSection } from "@/components/sections/hero-section/hero-section";
 
-import { PageSectionItem } from '@/components/cms/page/sanity-page';
-import { PageSection } from '@/components/layout/page-section/page-section';
-import { HeroSection } from '@/components/sections/hero-section/hero-section';
-
-type SanityHeroSectionProps = PageSectionItem<'heroSection'>;
+interface SanityHeroSectionProps {
+  _key: string;
+  _type: "heroSection";
+  title: string;
+  description: string;
+  ctaText?: string | null;
+  ctaHref?: string | null;
+}
 
 export const SanityHeroSection = (props: SanityHeroSectionProps) => {
-  const section = props;
   return (
-    <PageSection fullWidth key={section._key}>
+    <PageSection className="mt-0" fullWidth key={props._key}>
       <HeroSection
-        title={section.title}
-        description={section.description}
-        image={
-          section.backgroundImage.asset?.url && (
-            <Image
-              className='object-cover object-center'
-              src={section.backgroundImage.asset.url}
-              alt={section.backgroundImage.alt}
-              fill
-              priority
-            />
-          )
-        }
+        title={props.title}
+        description={props.description}
+        ctaText={props.ctaText}
+        ctaHref={props.ctaHref}
       />
     </PageSection>
   );

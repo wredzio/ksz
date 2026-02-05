@@ -1,13 +1,17 @@
-import { responsiveImage } from './objects/responsive-image';
-import { pageType } from './pages/page';
-import { blockContentSection } from './sections/block-content-section';
-import { carouselSection } from './sections/carousel-section';
-import { contactSection } from './sections/contact-section';
-import { heroSection } from './sections/hero-section';
-import { imageSection } from './sections/image-section';
-import { offerSection } from './sections/offer-section';
-import { subheadingSection } from './sections/subheading-section';
-import { settingsType } from './settings';
+import { responsiveImage } from "./objects/responsive-image";
+import { pageType } from "./pages/page";
+import { aboutSection } from "./sections/about-section";
+import { blockContentSection } from "./sections/block-content-section";
+import { contactSection } from "./sections/contact-section";
+import { faqSection } from "./sections/faq-section";
+import { heroSection } from "./sections/hero-section";
+import { imageSection } from "./sections/image-section";
+import { processSection } from "./sections/process-section";
+import { projectsSection } from "./sections/projects-section";
+import { servicesSection } from "./sections/services-section";
+import { subheadingSection } from "./sections/subheading-section";
+import { teamSection } from "./sections/team-section";
+import { settingsType } from "./settings";
 
 export const schemaTypes = [
   settingsType,
@@ -18,6 +22,10 @@ export const schemaTypes = [
   contactSection,
   heroSection,
   subheadingSection,
-  carouselSection,
-  offerSection,
+  aboutSection,
+  servicesSection,
+  projectsSection,
+  processSection,
+  faqSection,
+  teamSection,
 ];

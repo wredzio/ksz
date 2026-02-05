@@ -1,8 +1,7 @@
-import { defineQuery } from 'next-sanity';
+import { defineQuery } from "next-sanity";
 
-// Query with expanded asset references
-// Usage: client.fetch(pageQuery, { slug: 'home' })
-export const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug][0]{
+export const pageQuery =
+  defineQuery(`*[_type == "page" && slug.current == $slug][0]{
   _id,
   _type,
   _createdAt,
@@ -27,6 +26,9 @@ export const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug
     title,
     description,
     text,
+    subtitle,
+    ctaText,
+    ctaHref,
     images[]{
       ...,
        image{
@@ -52,26 +54,32 @@ export const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug
       },
       aspectRatio
     },
-    backgroundImage{
-      ...,
-      asset->
-    },
     layout,
     fullWidth,
     phone,
     address,
     email,
-    showCtaCard,
-    ctaText,
-    instagramUrl,
-    ctaPosition,
-    _type == 'offerSection' => {
-      packages[]{
-        number,
-        subtitle,
+    _type == 'aboutSection' => {
+      features[]{
+        _key,
+        icon,
+        title,
+        description
+      }
+    },
+    _type == 'servicesSection' => {
+      services[]{
+        _key,
         title,
         description,
-        price,
+        icon
+      }
+    },
+    _type == 'projectsSection' => {
+      projects[]{
+        _key,
+        title,
+        description,
         image{
           image{
             asset->,
@@ -79,13 +87,25 @@ export const pageQuery = defineQuery(`*[_type == "page" && slug.current == $slug
             hotspot
           },
           aspectRatio
-        }
-      },
-      additionalOption{
-        label,
-        price
-      },
-      defaultOpenPackage
+        },
+        url,
+        tags
+      }
+    },
+    _type == 'processSection' => {
+      steps[]{
+        _key,
+        number,
+        title,
+        description
+      }
+    },
+    _type == 'faqSection' => {
+      items[]{
+        _key,
+        question,
+        answer
+      }
     }
   }
 }`);

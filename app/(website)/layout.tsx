@@ -1,8 +1,8 @@
-import { ReactNode } from 'react';
-import { Analytics } from '@vercel/analytics/react';
+import { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
-import { SiteLayout } from '../../components/layout/site-layout';
-import { getNavigationData } from '../../sanity/sanity.client';
+import { SiteLayout } from "../../components/layout/site-layout";
+import { getNavigationData } from "../../sanity/sanity.client";
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,7 +11,9 @@ interface LayoutProps {
 export default async function Layout({ children }: LayoutProps) {
   const navigationData = await getNavigationData();
 
-  const navigationLinks = (navigationData?.navigation?.navigationLinks ?? []).map((link) => ({
+  const navigationLinks = (
+    navigationData?.navigation?.navigationLinks ?? []
+  ).map((link) => ({
     label: link.label,
     href: link.href,
     external: link.external || false,

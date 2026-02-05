@@ -1,34 +1,26 @@
-import { PageType, sanityComponent } from './sanity-component';
+import { PageType, sanityComponent } from "./sanity-component";
 
 interface BaseSanityComponentData {
   _key: string;
   _type: string;
 }
 
-type AwaitedReturnType<T extends PageType> = Awaited<ReturnType<(typeof sanityComponent)[T]>>;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ParametersOfReturnedType<T> = T extends (...args: infer P) => any ? P[0] : never;
-
-type FunctionParameters<T extends PageType> = ParametersOfReturnedType<
-  AwaitedReturnType<T>[keyof AwaitedReturnType<T>]
->;
-
-interface SanityComponentsProps<T extends PageType> {
-  pageType: T;
-  sanityComponentsData: (BaseSanityComponentData & FunctionParameters<T>)[];
+interface SanityComponentsProps {
+  pageType: PageType;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sanityComponentsData: (BaseSanityComponentData & Record<string, any>)[];
 }
 
-export const SanityComponents = async <T extends PageType>(props: SanityComponentsProps<T>) => {
+export const SanityComponents = async (props: SanityComponentsProps) => {
   const { pageType, sanityComponentsData } = props;
   const pageComponents = await sanityComponent[pageType]();
 
   return sanityComponentsData.map((sanityComponentData) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error
     const Component = pageComponents[sanityComponentData._type];
     if (!Component) return null;
 
-    return <Component key={sanityComponentData._key} {...sanityComponentData} />;
+    return (
+      <Component key={sanityComponentData._key} {...sanityComponentData} />
+    );
   });
 };

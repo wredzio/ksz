@@ -1,4 +1,4 @@
-import { defineQuery } from 'next-sanity';
+import { defineQuery } from "next-sanity";
 
 // Query to fetch navigation data from settings
 export const navigationQuery = defineQuery(`*[_type == "settings"][0]{
@@ -25,6 +25,7 @@ export const settingsQuery = defineQuery(`
     address,
     mail,
     social,
+    openGraphImage,
     footerImage {
       ...,
       image {

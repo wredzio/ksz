@@ -1,10 +1,9 @@
-'use client';
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useCallback, useEffect, useState } from "react";
+import Link from "next/link";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 export interface NavigationLink {
   label: string;
@@ -17,190 +16,219 @@ export interface PageHeaderProps {
   className?: string;
 }
 
-/**
- * PageHeader - Main navigation header component
- *
- * Features:
- * - Fixed positioning at top of viewport
- * - Solid background at top, semi-transparent with blur on scroll
- * - Logo on the left, navigation links on the right
- * - Responsive design (desktop-first from Figma)
- * - Keyboard accessible navigation
- * - Supports both regular links and anchor links (e.g., /#section)
- * - Smooth scroll behavior for anchor links
- */
 export const Header = ({ navigationLinks, className }: PageHeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 50);
     };
 
-    // Check initial scroll position
     handleScroll();
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Prevent body scroll when mobile menu is open but keep scrollbar visible
   useEffect(() => {
     if (isMobileMenuOpen) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-      document.body.style.overflow = 'hidden';
+      const scrollbarWidth =
+        window.innerWidth - document.documentElement.clientWidth;
+      document.body.style.overflow = "hidden";
       document.body.style.paddingRight = `${scrollbarWidth}px`;
     } else {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     }
     return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
+      document.body.style.overflow = "";
+      document.body.style.paddingRight = "";
     };
   }, [isMobileMenuOpen]);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    // Close mobile menu if open
-    setIsMobileMenuOpen(false);
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      setIsMobileMenuOpen(false);
 
-    // Check if it's an anchor link (starts with # or /#)
-    if (href.startsWith('#') || href.startsWith('/#')) {
-      e.preventDefault();
-      const targetId = href.replace(/^\/?#/, '');
-      const targetElement = document.getElementById(targetId);
+      if (href.startsWith("#") || href.startsWith("/#")) {
+        e.preventDefault();
+        const targetId = href.replace(/^\/?#/, "");
+        const targetElement = document.getElementById(targetId);
 
-      if (targetElement) {
-        // Get header height to offset scroll position
-        const header = document.querySelector('header');
-        const headerHeight = header?.offsetHeight || 0;
+        if (targetElement) {
+          const header = document.querySelector("header");
+          const headerHeight = header?.offsetHeight || 0;
+          const targetPosition =
+            targetElement.getBoundingClientRect().top +
+            window.scrollY -
+            headerHeight;
 
-        // Calculate target position minus header height
-        const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+          window.scrollTo({
+            top: targetPosition,
+            behavior: "smooth",
+          });
 
-        // Scroll to position with offset
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth',
-        });
-
-        // Update URL without page reload
-        window.history.pushState(null, '', href);
+          window.history.pushState(null, "", href);
+        }
       }
-    }
-  };
+    },
+    [],
+  );
 
   return (
     <header
       className={cn(
-        'sticky top-0 right-0 left-0 z-50 w-full',
-        'transition-all duration-300',
-        // Always show solid background when mobile menu is open or when scrolled
-        isMobileMenuOpen || isScrolled ? 'bg-neutral-900' : 'bg-neutral-900',
-        // Add blur effect only when scrolled and menu is closed
-        !isMobileMenuOpen && isScrolled && 'bg-[rgba(26,26,26,0.5)] backdrop-blur-sm',
-        'px-2 md:px-4 xl:px-0',
-        className
+        "fixed z-50",
+        "left-0 right-0",
+        "mx-auto",
+        "transition-[top,left,right,max-width,padding,border-radius] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+        isScrolled
+          ? [
+              "top-4 left-4 right-4",
+              "max-w-2xl",
+              "rounded-3xl",
+              "px-5 py-2",
+            ]
+          : [
+              "top-0",
+              "max-w-full",
+              "px-4 md:px-6 xl:px-0",
+            ],
+        className,
       )}
     >
-      <div className='m-auto flex w-full max-w-7xl items-center justify-between py-4'>
+      {/* Pill background — fades in/out */}
+      <div
+        aria-hidden="true"
+        className={cn(
+          "pointer-events-none absolute inset-0 rounded-[inherit]",
+          "border border-white/[0.08]",
+          "bg-[rgba(10,10,15,0.6)] backdrop-blur-xl",
+          "shadow-[0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.05)]",
+          "transition-opacity duration-300",
+          isScrolled ? "opacity-100" : "opacity-0",
+        )}
+      />
+
+      {/* Content */}
+      <div
+        className={cn(
+          "relative mx-auto flex items-center justify-between",
+          "transition-[max-width,padding] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+          isScrolled ? "py-1.5" : "max-w-7xl py-4",
+        )}
+      >
         {/* Logo */}
-        <Link href='/' className='relative flex h-16 w-80 shrink-0' aria-label='Strona główna'>
-          <Image
-            src='/images/wb-cars-logo.svg'
-            alt='WB Cars Logo'
-            fill
-            className='object-contain object-left'
-            priority
-          />
+        <Link
+          href="/"
+          className="font-syne text-2xl font-extrabold tracking-tight text-primary neon-text-glow"
+          aria-label="Strona główna"
+        >
+          KSZ
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className='hidden items-center gap-8 lg:flex lg:gap-10' aria-label='Nawigacja główna'>
-          {navigationLinks.map((link, index) => (
-            <Link
-              key={`${link.href}-${index}`}
-              href={link.href}
-              onClick={(e) => handleClick(e, link.href)}
-              target={link.external ? '_blank' : undefined}
-              rel={link.external ? 'noopener noreferrer' : undefined}
-              className={cn(
-                'font-montserrat text-[13px] leading-tight font-bold uppercase',
-                'text-neutral-50 transition-colors duration-200',
-                'hover:text-primary',
-                'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring'
-              )}
-            >
-              {link.label}
-            </Link>
-          ))}
+        <nav
+          className="hidden items-center lg:flex"
+          aria-label="Nawigacja główna"
+        >
+          <div
+            className={cn(
+              "flex items-center transition-[gap] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]",
+              isScrolled ? "gap-5" : "gap-8 lg:gap-10",
+            )}
+          >
+            {navigationLinks.map((link, index) => (
+              <Link
+                key={`${link.href}-${index}`}
+                href={link.href}
+                onClick={(e) => handleClick(e, link.href)}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
+                className={cn(
+                  "font-dm-sans text-[13px] leading-tight font-bold uppercase",
+                  "text-foreground/80 transition-colors duration-200",
+                  "hover:text-primary",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                )}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </nav>
 
         {/* Mobile Hamburger Button */}
         <button
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           className={cn(
-            'flex flex-col gap-1.5 lg:hidden',
-            '-mr-2 p-2',
-            'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring'
+            "flex size-10 items-center justify-center lg:hidden",
+            "rounded-full",
+            "transition-colors duration-200",
+            "hover:bg-white/[0.06]",
+            "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           )}
-          aria-label='Menu'
+          aria-label="Menu"
           aria-expanded={isMobileMenuOpen}
         >
-          <span
-            className={cn(
-              'block h-0.5 w-6 bg-neutral-50 transition-all duration-300',
-              isMobileMenuOpen && 'translate-y-2 rotate-45'
-            )}
-          />
-          <span
-            className={cn('block h-0.5 w-6 bg-neutral-50 transition-all duration-300', isMobileMenuOpen && 'opacity-0')}
-          />
-          <span
-            className={cn(
-              'block h-0.5 w-6 bg-neutral-50 transition-all duration-300',
-              isMobileMenuOpen && '-translate-y-2 -rotate-45'
-            )}
-          />
+          <div className="flex flex-col gap-1.5">
+            <span
+              className={cn(
+                "block h-0.5 w-6 bg-foreground transition-all duration-300",
+                isMobileMenuOpen && "translate-y-2 rotate-45",
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-6 bg-foreground transition-all duration-300",
+                isMobileMenuOpen && "opacity-0",
+              )}
+            />
+            <span
+              className={cn(
+                "block h-0.5 w-6 bg-foreground transition-all duration-300",
+                isMobileMenuOpen && "-translate-y-2 -rotate-45",
+              )}
+            />
+          </div>
         </button>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Menu — CSS Grid height animation */}
       <div
         className={cn(
-          'overflow-hidden lg:hidden',
-          'absolute top-full right-0 left-0',
-          'bg-neutral-900',
-          'origin-top transition-all duration-300 ease-in-out',
-          'px-2 md:px-4 xl:px-0',
-          isMobileMenuOpen ? 'visible max-h-screen opacity-100' : 'invisible max-h-0 opacity-0'
+          "relative lg:hidden",
+          "grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]",
+          isMobileMenuOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
         )}
       >
-        <div className='m-auto w-full max-w-7xl'>
-          <nav
-            className='flex max-h-[calc(100vh-6rem)] flex-col gap-1 overflow-y-auto p-4'
-            aria-label='Nawigacja mobilna'
-          >
-            {navigationLinks.map((link, index) => (
-              <Link
-                key={`mobile-${link.href}-${index}`}
-                href={link.href}
-                onClick={(e) => handleClick(e, link.href)}
-                target={link.external ? '_blank' : undefined}
-                rel={link.external ? 'noopener noreferrer' : undefined}
-                className={cn(
-                  'font-montserrat text-base leading-tight font-bold uppercase',
-                  'text-neutral-50 transition-colors duration-200',
-                  'hover:text-primary active:text-primary',
-                  'rounded-lg px-4 py-4',
-                  'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring'
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+        <div className="overflow-hidden">
+          <div className="border-t border-white/[0.06]">
+            <nav
+              className="flex flex-col gap-1 py-3"
+              aria-label="Nawigacja mobilna"
+            >
+              {navigationLinks.map((link, index) => (
+                <Link
+                  key={`mobile-${link.href}-${index}`}
+                  href={link.href}
+                  onClick={(e) => handleClick(e, link.href)}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noopener noreferrer" : undefined}
+                  className={cn(
+                    "font-dm-sans text-base leading-tight font-bold uppercase",
+                    "text-foreground/80 transition-colors duration-200",
+                    "hover:text-primary active:text-primary",
+                    "rounded-lg px-3 py-3",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+                  )}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
         </div>
       </div>
     </header>

@@ -1,14 +1,22 @@
-import { PageSectionItem } from '@/components/cms/page/sanity-page';
-import { PageSection } from '@/components/layout/page-section/page-section';
-import { SubheadingSection } from '@/components/sections/subheading-section/subheading-section';
+import { PageSection } from "@/components/layout/page-section/page-section";
 
-type SanitySubheadingSectionProps = PageSectionItem<'subheadingSection'>;
+interface SanitySubheadingSectionProps {
+  _key: string;
+  _type: "subheadingSection";
+  id?: string | null;
+  text: string;
+}
 
-export const SanitySubheadingSection = (props: SanitySubheadingSectionProps) => {
-  const section = props;
+export const SanitySubheadingSection = (
+  props: SanitySubheadingSectionProps,
+) => {
   return (
-    <PageSection key={section._key} id={section.id || undefined}>
-      <SubheadingSection text={section.text} />
+    <PageSection key={props._key} id={props.id ?? undefined}>
+      <div className="px-4 py-8">
+        <h2 className="font-syne text-3xl font-bold text-primary md:text-4xl">
+          {props.text}
+        </h2>
+      </div>
     </PageSection>
   );
 };

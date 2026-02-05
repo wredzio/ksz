@@ -1,6 +1,6 @@
 const success = <T>(value: T) => ({
-  get _tag(): 'success' {
-    return 'success';
+  get _tag(): "success" {
+    return "success";
   },
   value,
 });
@@ -8,8 +8,8 @@ const success = <T>(value: T) => ({
 type Success<T> = ReturnType<typeof success<T>>;
 
 const failure = <E>(error: E) => ({
-  get _tag(): 'failure' {
-    return 'failure';
+  get _tag(): "failure" {
+    return "failure";
   },
   error,
 });
@@ -26,12 +26,16 @@ export const succeed = <T>(t: T): Success<T> => {
   return success(t);
 };
 
-export const isSuccess = <T>(result: Result<T, unknown>): result is Success<T> => {
-  return result._tag === 'success';
+export const isSuccess = <T>(
+  result: Result<T, unknown>,
+): result is Success<T> => {
+  return result._tag === "success";
 };
 
-export const isFailure = <E>(result: Result<unknown, E>): result is Failure<E> => {
-  return result._tag === 'failure';
+export const isFailure = <E>(
+  result: Result<unknown, E>,
+): result is Failure<E> => {
+  return result._tag === "failure";
 };
 
 export const unwrap = <T, E>(result: Result<T, E>, defaultValue?: T): T => {

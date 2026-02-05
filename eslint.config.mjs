@@ -1,11 +1,10 @@
 // For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import prettierConfig from 'eslint-config-prettier/flat';
 import checkFilePlugin from 'eslint-plugin-check-file';
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
+import storybook from "eslint-plugin-storybook";
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -21,7 +20,7 @@ const eslintConfig = [
   js.configs.recommended,
   prettierConfig,
   {
-    ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts'],
+    ignores: ['node_modules/**', '.next/**', 'out/**', 'build/**', 'next-env.d.ts', '.claude/**'],
   },
   {
     plugins: {

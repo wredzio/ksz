@@ -1,19 +1,26 @@
-'use client';
+"use client";
 
-import React from 'react';
-import imageUrlBuilder from '@sanity/image-url';
-import { SanityAsset } from '@sanity/image-url/lib/types/types';
-import NextImage from 'next/image';
+import React from "react";
+import imageUrlBuilder from "@sanity/image-url";
+import { SanityAsset } from "@sanity/image-url/lib/types/types";
+import NextImage from "next/image";
 
-import { deviceSizes } from '@/device-sizes';
-import { cn } from '@/lib/utils';
-import { dataset, projectId } from '@/sanity/sanity.api';
+import { deviceSizes } from "@/device-sizes";
+import { cn } from "@/lib/utils";
+import { dataset, projectId } from "@/sanity/sanity.api";
 
-import { AspectRatio, aspectRatioToClassName, countAspectRatio } from './aspect-ratio';
+import {
+  AspectRatio,
+  aspectRatioToClassName,
+  countAspectRatio,
+} from "./aspect-ratio";
 
 type UnionDeviceSizes = (typeof deviceSizes)[number];
-type ImageSize = `${number}${'vw' | 'px'}`;
-type Sizes = [...`(${'max' | 'min'}-width: ${UnionDeviceSizes}px) ${ImageSize}`[], ImageSize];
+type ImageSize = `${number}${"vw" | "px"}`;
+type Sizes = [
+  ...`(${"max" | "min"}-width: ${UnionDeviceSizes}px) ${ImageSize}`[],
+  ImageSize,
+];
 
 const sanityLoader = ({
   width,
@@ -37,7 +44,7 @@ const sanityLoader = ({
     .quality(quality || 75);
 
   if (aspectRatio) {
-    image.height(Math.floor(width * aspectRatio)).fit('crop');
+    image.height(Math.floor(width * aspectRatio)).fit("crop");
   }
 
   return image.url();
@@ -54,14 +61,14 @@ type StaticImageProps = {
 } & (
   | {
       src: string;
-      loaderType: 'local';
+      loaderType: "local";
     }
   | {
       src: string;
-      loaderType: 'external';
+      loaderType: "external";
     }
   | {
-      loaderType: 'sanity';
+      loaderType: "sanity";
       image: SanityAsset;
     }
 );
@@ -69,7 +76,7 @@ type StaticImageProps = {
 export const StaticImage = (props: StaticImageProps) => {
   const { quality, alt, priority = false, loaderType, className } = props;
 
-  if (loaderType === 'sanity') {
+  if (loaderType === "sanity") {
     return (
       <NextImage
         className={className}
@@ -105,7 +112,7 @@ export const StaticImage = (props: StaticImageProps) => {
 };
 
 export const aspectRatioStyle = (aspectRatio: AspectRatio) => {
-  if (typeof aspectRatio === 'string') {
+  if (typeof aspectRatio === "string") {
     return { className: aspectRatioToClassName[aspectRatio] };
   }
 
@@ -127,15 +134,15 @@ type ResponsiveImageProps = {
   | {
       src: string;
       alt: string;
-      loaderType: 'local';
+      loaderType: "local";
     }
   | {
       src: string;
       alt: string;
-      loaderType: 'external';
+      loaderType: "external";
     }
   | {
-      loaderType: 'sanity';
+      loaderType: "sanity";
       image: SanityAsset;
       alt: string;
     }
@@ -146,11 +153,18 @@ export const ResponsiveImage = (props: ResponsiveImageProps) => {
 
   const { className, style } = aspectRatioStyle(aspectRatio);
 
-  if (loaderType === 'sanity') {
+  if (loaderType === "sanity") {
     return (
-      <div className={cn(className, props.className, 'relative w-full overflow-hidden')} style={style}>
+      <div
+        className={cn(
+          className,
+          props.className,
+          "relative w-full overflow-hidden",
+        )}
+        style={style}
+      >
         <NextImage
-          className={cn('absolute inset-0 h-full w-full object-cover')}
+          className={cn("absolute inset-0 h-full w-full object-cover")}
           priority={priority}
           loader={(loaderProps) =>
             sanityLoader({
@@ -164,23 +178,26 @@ export const ResponsiveImage = (props: ResponsiveImageProps) => {
           alt={props.image.alt}
           quality={props.quality}
           // onError={handleError}
-          sizes={props.sizes?.join(', ')}
+          sizes={props.sizes?.join(", ")}
         />
       </div>
     );
   }
 
   return (
-    <div className={cn(className, 'relative w-full overflow-hidden')} style={style}>
+    <div
+      className={cn(className, "relative w-full overflow-hidden")}
+      style={style}
+    >
       <NextImage
-        className={cn('absolute inset-0 h-full w-full object-contain')}
+        className={cn("absolute inset-0 h-full w-full object-contain")}
         priority={priority}
         fill
         src={props.src}
         alt={props.alt}
         quality={props.quality}
         // onError={handleError}
-        sizes={props.sizes?.join(', ')}
+        sizes={props.sizes?.join(", ")}
       />
     </div>
   );

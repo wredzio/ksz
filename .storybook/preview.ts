@@ -1,14 +1,17 @@
-import type { Preview } from '@storybook/nextjs';
-import '../app/globals.css';
+import "../app/globals.css";
+
+import type { Preview } from "@storybook/nextjs";
 
 const preview: Preview = {
   parameters: {
-    controls: {
-      matchers: {
-        color: /(background|color)$/i,
-        date: /Date$/i,
-      },
+    backgrounds: {
+      default: "dark",
+      values: [
+        { name: "dark", value: "rgb(10, 10, 15)" },
+        { name: "light", value: "#ffffff" },
+      ],
     },
+    layout: "fullscreen",
   },
 };
 

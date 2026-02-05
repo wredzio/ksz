@@ -1,33 +1,99 @@
-import React from 'react';
+"use client";
+
+import React from "react";
+import Link from "next/link";
+
+import { cn } from "@/lib/utils";
+
+import { FloatingLines } from "../../ui/floating-lines/floating-lines";
 
 interface HeroSectionProps {
   title: string;
   description: string;
-  image: React.ReactNode;
+  ctaText?: string | null;
+  ctaHref?: string | null;
 }
 
 export const HeroSection = (props: HeroSectionProps) => {
-  const { title, description, image } = props;
+  const { title, description, ctaText, ctaHref } = props;
 
   return (
-    <section className='relative h-[500px] w-full overflow-hidden bg-background md:h-[600px] lg:h-[723px]'>
-      <div className='absolute top-0 right-0 h-full w-[60%] md:w-[55%] lg:w-[917px]'>
-        <div className='absolute inset-0'>{image}</div>
+    <section className="relative h-dvh w-full overflow-hidden bg-background">
+      {/* FloatingLines background */}
+      <div className="absolute inset-0">
+        <FloatingLines
+          linesGradient={["#00ffaa", "#8a2be2", "#00d4ff"]}
+          enabledWaves={["middle", "bottom"]}
+          lineCount={[2, 2]}
+          lineDistance={[88.5, 88.5]}
+          bendRadius={14}
+          bendStrength={-1.0}
+          animationSpeed={0.8}
+          interactive={true}
+          parallax={true}
+          parallaxStrength={0.15}
+          className="h-full w-full"
+        />
       </div>
 
-      {/* Content */}
-      <div className='relative flex h-full items-end lg:items-center'>
-        <div className='container mb-10 lg:mx-auto lg:px-16'>
-          <div className='flex max-w-[500] flex-col gap-6 rounded-lg bg-black/30 p-4 backdrop-blur-md md:max-w-[634px] lg:bg-transparent lg:p-0 lg:backdrop-blur-none'>
-            {/* Title */}
-            <h1 className='font-michroma text-4xl leading-normal font-normal text-primary uppercase md:text-5xl lg:text-[56px]'>
-              {title}
-            </h1>
+      {/* Content overlay — pointer-events-none so mouse reaches the canvas */}
+      <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-4">
+        <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
+          <h1
+            className={cn(
+              "font-syne text-5xl font-extrabold tracking-tight text-primary uppercase",
+              "neon-text-glow",
+              "md:text-7xl lg:text-8xl",
+            )}
+          >
+            {title}
+          </h1>
 
-            {/* Description */}
-            <p className='font-montserrat text-lg leading-[1.2] font-normal text-neutral-50 md:text-xl lg:max-w-[507px] lg:text-2xl'>
-              {description}
-            </p>
+          <p className="font-dm-sans max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl lg:text-2xl">
+            {description}
+          </p>
+
+          {ctaText && ctaHref && (
+            <Link
+              href={ctaHref}
+              onClick={(e) => {
+                if (
+                  ctaHref.startsWith("#") ||
+                  ctaHref.startsWith("/#")
+                ) {
+                  e.preventDefault();
+                  const targetId = ctaHref.replace(/^\/?#/, "");
+                  const target = document.getElementById(targetId);
+                  if (target) {
+                    const header = document.querySelector("header");
+                    const offset = header?.offsetHeight || 0;
+                    window.scrollTo({
+                      top:
+                        target.getBoundingClientRect().top +
+                        window.scrollY -
+                        offset,
+                      behavior: "smooth",
+                    });
+                    window.history.pushState(null, "", ctaHref);
+                  }
+                }
+              }}
+              className={cn(
+                "pointer-events-auto font-syne mt-4 inline-flex items-center rounded-full border border-primary px-8 py-3 text-sm font-bold uppercase tracking-wider text-primary",
+                "transition-all duration-300",
+                "hover:bg-primary hover:text-primary-foreground hover:neon-glow",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+              )}
+            >
+              {ctaText}
+            </Link>
+          )}
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <div className="h-8 w-5 rounded-full border-2 border-primary/50">
+            <div className="mx-auto mt-1.5 h-2 w-1 rounded-full bg-primary/70" />
           </div>
         </div>
       </div>

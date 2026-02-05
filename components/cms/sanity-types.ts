@@ -14,7 +14,7 @@
 
 // Source: schema.json
 export type OfferSection = {
-  _type: 'offerSection';
+  _type: "offerSection";
   packages: Array<{
     number: string;
     subtitle: string;
@@ -32,7 +32,7 @@ export type OfferSection = {
 };
 
 export type CarouselSection = {
-  _type: 'carouselSection';
+  _type: "carouselSection";
   title?: string;
   images: Array<
     {
@@ -46,32 +46,32 @@ export type CarouselSection = {
 };
 
 export type SubheadingSection = {
-  _type: 'subheadingSection';
+  _type: "subheadingSection";
   id?: string;
   text: string;
 };
 
 export type HeroSection = {
-  _type: 'heroSection';
+  _type: "heroSection";
   title: string;
   description: string;
   backgroundImage: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt: string;
-    _type: 'image';
+    _type: "image";
   };
 };
 
 export type ContactSection = {
-  _type: 'contactSection';
+  _type: "contactSection";
   id?: string;
   title: string;
   phone: string;
@@ -84,48 +84,48 @@ export type BlockContentSection = Array<
       children?: Array<{
         marks?: Array<string>;
         text?: string;
-        _type: 'span';
+        _type: "span";
         _key: string;
       }>;
-      style?: 'normal' | 'h1' | 'h2' | 'h3' | 'h4' | 'blockquote';
-      listItem?: 'bullet';
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet";
       markDefs?: Array<{
         href?: string;
-        _type: 'link';
+        _type: "link";
         _key: string;
       }>;
       level?: number;
-      _type: 'block';
+      _type: "block";
       _key: string;
     }
   | {
       asset?: {
         _ref: string;
-        _type: 'reference';
+        _type: "reference";
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: 'image';
+      _type: "image";
       _key: string;
     }
 >;
 
 export type ImageSection = {
-  _type: 'imageSection';
+  _type: "imageSection";
   title: string;
   body: BlockContentSection;
   image: ResponsiveImage;
-  layout: 'left' | 'right';
+  layout: "left" | "right";
   fullWidth?: boolean;
 };
 
 export type Page = {
   _id: string;
-  _type: 'page';
+  _type: "page";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -138,15 +138,15 @@ export type Page = {
     ogImage?: {
       asset?: {
         _ref: string;
-        _type: 'reference';
+        _type: "reference";
         _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
       };
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: 'image';
+      _type: "image";
     };
     noIndex?: boolean;
   };
@@ -174,7 +174,7 @@ export type Page = {
 
 export type Settings = {
   _id: string;
-  _type: 'settings';
+  _type: "settings";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -194,7 +194,7 @@ export type Settings = {
   address?: string;
   footerImage?: ResponsiveImage;
   social?: Array<{
-    media?: 'Twitter' | 'Facebook' | 'Instagram' | 'Linkedin' | 'Youtube';
+    media?: "Twitter" | "Facebook" | "Instagram" | "Linkedin" | "Youtube";
     url?: string;
     _key: string;
   }>;
@@ -203,38 +203,38 @@ export type Settings = {
   openGraphImage?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    _type: 'image';
+    _type: "image";
   };
   privacyPolicy: BlockContentSection;
 };
 
 export type ResponsiveImage = {
-  _type: 'responsiveImage';
+  _type: "responsiveImage";
   image: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt: string;
-    _type: 'image';
+    _type: "image";
   };
-  aspectRatio: '3/4' | '9/16' | '16/9' | '1/1' | '4/3' | '3/2' | '13/5';
+  aspectRatio: "3/4" | "9/16" | "16/9" | "1/1" | "4/3" | "3/2" | "13/5";
 };
 
 export type SanityImagePaletteSwatch = {
-  _type: 'sanity.imagePaletteSwatch';
+  _type: "sanity.imagePaletteSwatch";
   background?: string;
   foreground?: string;
   population?: number;
@@ -242,7 +242,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: 'sanity.imagePalette';
+  _type: "sanity.imagePalette";
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -253,14 +253,14 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: 'sanity.imageDimensions';
+  _type: "sanity.imageDimensions";
   height: number;
   width: number;
   aspectRatio: number;
 };
 
 export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot';
+  _type: "sanity.imageHotspot";
   x: number;
   y: number;
   height: number;
@@ -268,7 +268,7 @@ export type SanityImageHotspot = {
 };
 
 export type SanityImageCrop = {
-  _type: 'sanity.imageCrop';
+  _type: "sanity.imageCrop";
   top: number;
   bottom: number;
   left: number;
@@ -277,7 +277,7 @@ export type SanityImageCrop = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: 'sanity.fileAsset';
+  _type: "sanity.fileAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -299,7 +299,7 @@ export type SanityFileAsset = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: 'sanity.imageAsset';
+  _type: "sanity.imageAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -321,7 +321,7 @@ export type SanityImageAsset = {
 };
 
 export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata';
+  _type: "sanity.imageMetadata";
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -332,20 +332,20 @@ export type SanityImageMetadata = {
 };
 
 export type Geopoint = {
-  _type: 'geopoint';
+  _type: "geopoint";
   lat?: number;
   lng?: number;
   alt?: number;
 };
 
 export type Slug = {
-  _type: 'slug';
+  _type: "slug";
   current: string;
   source?: string;
 };
 
 export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData';
+  _type: "sanity.assetSourceData";
   name?: string;
   id?: string;
   url?: string;
@@ -379,7 +379,7 @@ export declare const internalGroqTypeReferenceTo: unique symbol;
 // Query: *[_type == "page" && slug.current == $slug][0]{  _id,  _type,  _createdAt,  _updatedAt,  _rev,  title,  slug,  metadata{    metaTitle,    metaDescription,    keywords,    ogImage{      ...,      asset->    },    noIndex  },  sections[]{    _key,    _type,    id,    title,    description,    text,    images[]{      ...,       image{        ...,        asset->      },      asset->,      alt,      aspectRatio    },    body[]{      ...,      _type == 'image' => {        ...,        asset->      }    },    image{      ...,      image{        ...,        asset->      },      aspectRatio    },    backgroundImage{      ...,      asset->    },    layout,    fullWidth,    phone,    address,    email,    showCtaCard,    ctaText,    instagramUrl,    ctaPosition,    _type == 'offerSection' => {      packages[]{        number,        subtitle,        title,        description,        price,        image{          image{            asset->,            alt,            hotspot          },          aspectRatio        }      },      additionalOption{        label,        price      },      defaultOpenPackage    }  }}
 export type PageQueryResult = {
   _id: string;
-  _type: 'page';
+  _type: "page";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -392,7 +392,7 @@ export type PageQueryResult = {
     ogImage: {
       asset: {
         _id: string;
-        _type: 'sanity.imageAsset';
+        _type: "sanity.imageAsset";
         _createdAt: string;
         _updatedAt: string;
         _rev: string;
@@ -416,25 +416,25 @@ export type PageQueryResult = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt?: string;
-      _type: 'image';
+      _type: "image";
     } | null;
     noIndex: boolean | null;
   } | null;
   sections: Array<
     | {
         _key: string;
-        _type: 'carouselSection';
+        _type: "carouselSection";
         id: null;
         title: string | null;
         description: null;
         text: null;
         images: Array<{
           _key: string;
-          _type: 'responsiveImage';
+          _type: "responsiveImage";
           image: {
             asset: {
               _id: string;
-              _type: 'sanity.imageAsset';
+              _type: "sanity.imageAsset";
               _createdAt: string;
               _updatedAt: string;
               _rev: string;
@@ -458,9 +458,9 @@ export type PageQueryResult = {
             hotspot?: SanityImageHotspot;
             crop?: SanityImageCrop;
             alt: string;
-            _type: 'image';
+            _type: "image";
           };
-          aspectRatio: '1/1' | '13/5' | '16/9' | '3/2' | '3/4' | '4/3' | '9/16';
+          aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
           asset: null;
           alt: null;
         }>;
@@ -479,7 +479,7 @@ export type PageQueryResult = {
       }
     | {
         _key: string;
-        _type: 'contactSection';
+        _type: "contactSection";
         id: string | null;
         title: string;
         description: null;
@@ -500,7 +500,7 @@ export type PageQueryResult = {
       }
     | {
         _key: string;
-        _type: 'heroSection';
+        _type: "heroSection";
         id: null;
         title: string;
         description: string;
@@ -511,7 +511,7 @@ export type PageQueryResult = {
         backgroundImage: {
           asset: {
             _id: string;
-            _type: 'sanity.imageAsset';
+            _type: "sanity.imageAsset";
             _createdAt: string;
             _updatedAt: string;
             _rev: string;
@@ -535,7 +535,7 @@ export type PageQueryResult = {
           hotspot?: SanityImageHotspot;
           crop?: SanityImageCrop;
           alt: string;
-          _type: 'image';
+          _type: "image";
         };
         layout: null;
         fullWidth: null;
@@ -549,7 +549,7 @@ export type PageQueryResult = {
       }
     | {
         _key: string;
-        _type: 'imageSection';
+        _type: "imageSection";
         id: null;
         title: string;
         description: null;
@@ -560,24 +560,24 @@ export type PageQueryResult = {
               children?: Array<{
                 marks?: Array<string>;
                 text?: string;
-                _type: 'span';
+                _type: "span";
                 _key: string;
               }>;
-              style?: 'blockquote' | 'h1' | 'h2' | 'h3' | 'h4' | 'normal';
-              listItem?: 'bullet';
+              style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+              listItem?: "bullet";
               markDefs?: Array<{
                 href?: string;
-                _type: 'link';
+                _type: "link";
                 _key: string;
               }>;
               level?: number;
-              _type: 'block';
+              _type: "block";
               _key: string;
             }
           | {
               asset: {
                 _id: string;
-                _type: 'sanity.imageAsset';
+                _type: "sanity.imageAsset";
                 _createdAt: string;
                 _updatedAt: string;
                 _rev: string;
@@ -601,16 +601,16 @@ export type PageQueryResult = {
               hotspot?: SanityImageHotspot;
               crop?: SanityImageCrop;
               alt?: string;
-              _type: 'image';
+              _type: "image";
               _key: string;
             }
         >;
         image: {
-          _type: 'responsiveImage';
+          _type: "responsiveImage";
           image: {
             asset: {
               _id: string;
-              _type: 'sanity.imageAsset';
+              _type: "sanity.imageAsset";
               _createdAt: string;
               _updatedAt: string;
               _rev: string;
@@ -634,12 +634,12 @@ export type PageQueryResult = {
             hotspot?: SanityImageHotspot;
             crop?: SanityImageCrop;
             alt: string;
-            _type: 'image';
+            _type: "image";
           };
-          aspectRatio: '1/1' | '13/5' | '16/9' | '3/2' | '3/4' | '4/3' | '9/16';
+          aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
         };
         backgroundImage: null;
-        layout: 'left' | 'right';
+        layout: "left" | "right";
         fullWidth: boolean | null;
         phone: null;
         address: null;
@@ -651,7 +651,7 @@ export type PageQueryResult = {
       }
     | {
         _key: string;
-        _type: 'offerSection';
+        _type: "offerSection";
         id: null;
         title: null;
         description: null;
@@ -679,7 +679,7 @@ export type PageQueryResult = {
             image: {
               asset: {
                 _id: string;
-                _type: 'sanity.imageAsset';
+                _type: "sanity.imageAsset";
                 _createdAt: string;
                 _updatedAt: string;
                 _rev: string;
@@ -702,7 +702,14 @@ export type PageQueryResult = {
               alt: string;
               hotspot: SanityImageHotspot | null;
             };
-            aspectRatio: '1/1' | '13/5' | '16/9' | '3/2' | '3/4' | '4/3' | '9/16';
+            aspectRatio:
+              | "1/1"
+              | "13/5"
+              | "16/9"
+              | "3/2"
+              | "3/4"
+              | "4/3"
+              | "9/16";
           };
         }>;
         additionalOption: {
@@ -713,7 +720,7 @@ export type PageQueryResult = {
       }
     | {
         _key: string;
-        _type: 'subheadingSection';
+        _type: "subheadingSection";
         id: string | null;
         title: null;
         description: null;
@@ -768,16 +775,16 @@ export type SettingsQueryResult = {
   address: string | null;
   mail: string | null;
   social: Array<{
-    media?: 'Facebook' | 'Instagram' | 'Linkedin' | 'Twitter' | 'Youtube';
+    media?: "Facebook" | "Instagram" | "Linkedin" | "Twitter" | "Youtube";
     url?: string;
     _key: string;
   }> | null;
   footerImage: {
-    _type: 'responsiveImage';
+    _type: "responsiveImage";
     image: {
       asset: {
         _id: string;
-        _type: 'sanity.imageAsset';
+        _type: "sanity.imageAsset";
         _createdAt: string;
         _updatedAt: string;
         _rev: string;
@@ -801,15 +808,15 @@ export type SettingsQueryResult = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       alt: string;
-      _type: 'image';
+      _type: "image";
     };
-    aspectRatio: '1/1' | '13/5' | '16/9' | '3/2' | '3/4' | '4/3' | '9/16';
+    aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
   } | null;
 } | null;
 
 // Query TypeMap
-import '@sanity/client';
-declare module '@sanity/client' {
+import "@sanity/client";
+declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    id,\n    title,\n    description,\n    text,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    backgroundImage{\n      ...,\n      asset->\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    showCtaCard,\n    ctaText,\n    instagramUrl,\n    ctaPosition,\n    _type == 'offerSection' => {\n      packages[]{\n        number,\n        subtitle,\n        title,\n        description,\n        price,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        }\n      },\n      additionalOption{\n        label,\n        price\n      },\n      defaultOpenPackage\n    }\n  }\n}": PageQueryResult;
     '*[_type == "page"]{\n  _id,\n  title,\n  slug\n}': AllPagesQueryResult;

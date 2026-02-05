@@ -1,22 +1,25 @@
-import type { NextConfig } from 'next';
+import type { NextConfig } from "next";
 
-import { deviceSizes } from './device-sizes';
+import { deviceSizes } from "./device-sizes";
 
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    formats: ['image/avif', 'image/webp'],
+    formats: ["image/avif", "image/webp"],
     dangerouslyAllowSVG: true,
-    remotePatterns: [{ hostname: 'cdn.sanity.io' }, { hostname: 'picsum.photos' }],
+    remotePatterns: [
+      { hostname: "cdn.sanity.io" },
+      { hostname: "picsum.photos" },
+    ],
     deviceSizes: deviceSizes as unknown as number[],
   },
   typescript: {
     // Set this to false if you want production builds to abort if there's type errors
-    ignoreBuildErrors: process.env.VERCEL_ENV === 'production',
+    ignoreBuildErrors: process.env.VERCEL_ENV === "production",
   },
   eslint: {
     /// Set this to false if you want production builds to abort if there's lint errors
-    ignoreDuringBuilds: process.env.VERCEL_ENV === 'production',
+    ignoreDuringBuilds: process.env.VERCEL_ENV === "production",
   },
 };
 

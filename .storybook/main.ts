@@ -1,12 +1,13 @@
-import type { StorybookConfig } from '@storybook/nextjs';
+import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
-  stories: ['../components/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
-  addons: ['@storybook/addon-mcp'],
+  stories: ["../components/**/*.stories.@(ts|tsx)"],
+  addons: [],
   framework: {
-    name: '@storybook/nextjs',
+    name: "@storybook/nextjs",
     options: {},
   },
-  staticDirs: ['../public'],
+  staticDirs: ["../public"],
 };
+
 export default config;

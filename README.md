@@ -253,13 +253,13 @@ When adding a new content section (e.g., "Hero Section", "Contact Form"):
 
    ```typescript
    export const heroSection = {
-     name: 'hero-section',
-     type: 'object',
-     title: 'Hero Section',
+     name: "hero-section",
+     type: "object",
+     title: "Hero Section",
      fields: [
        // Define your fields here
-     ]
-   }
+     ],
+   };
    ```
 
 2. **Register Schema** (add to `sanity/schemas/index.ts`)
@@ -287,31 +287,31 @@ When adding a new content section (e.g., "Hero Section", "Contact Form"):
 5. **Create Storybook Story** (`components/sections/hero-section/hero-section.stories.tsx`)
 
    ```typescript
-   import type { Meta, StoryObj } from '@storybook/react'
-   import { HeroSection } from './hero-section'
+   import type { Meta, StoryObj } from "@storybook/react";
+   import { HeroSection } from "./hero-section";
 
    const meta: Meta<typeof HeroSection> = {
-     title: 'Sections/HeroSection',
+     title: "Sections/HeroSection",
      component: HeroSection,
-   }
+   };
 
-   export default meta
-   type Story = StoryObj<typeof HeroSection>
+   export default meta;
+   type Story = StoryObj<typeof HeroSection>;
 
    export const Default: Story = {
      args: {
        // Add component props
      },
-   }
+   };
    ```
 
 6. **Register in Component Mapper** (`components/cms/sanity-components.tsx`)
 
    ```typescript
    const componentsMap = {
-     'hero-section': SanityHeroSection,
+     "hero-section": SanityHeroSection,
      // ... other sections
-   }
+   };
    ```
 
 7. **Add GROQ Query** (update `sanity/schemas/pages/page.queries.ts`)
@@ -386,25 +386,25 @@ Example story structure:
 
 ```typescript
 // components/sections/image-section/image-section.stories.tsx
-import type { Meta, StoryObj } from '@storybook/react'
-import { ImageSection } from './image-section'
+import type { Meta, StoryObj } from "@storybook/react";
+import { ImageSection } from "./image-section";
 
 const meta: Meta<typeof ImageSection> = {
-  title: 'Sections/ImageSection',
+  title: "Sections/ImageSection",
   component: ImageSection,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-}
+};
 
-export default meta
-type Story = StoryObj<typeof ImageSection>
+export default meta;
+type Story = StoryObj<typeof ImageSection>;
 
 export const Default: Story = {
   args: {
     // Component props
   },
-}
+};
 ```
 
 ### Storybook Configuration

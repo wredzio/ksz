@@ -1,63 +1,78 @@
-import { notFound } from 'next/navigation';
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
-import { SanityComponents } from '@/components/cms/sanity-components';
-import type { PageQueryResult } from '@/components/cms/sanity-types';
-import { getClient } from '@/sanity/sanity.client';
-import { pageQuery } from '@/sanity/schemas/pages/page.queries';
-import { Metadata } from 'next';
-import { getSettings } from '../../sanity/lib/get-settings';
-import { urlForImage } from '../../sanity/schemas/image';
+import { SanityComponents } from "@/components/cms/sanity-components";
+import { getClient } from "@/sanity/sanity.client";
+import { pageQuery } from "@/sanity/schemas/pages/page.queries";
+
+import { getSettings } from "../../sanity/lib/get-settings";
+import { urlForImage } from "../../sanity/schemas/image";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const slugString = '/';
+  const slugString = "/";
 
   const client = getClient();
-  const page = await client.fetch<PageQueryResult>(pageQuery, { slug: slugString });
+  const page = await client.fetch(pageQuery, { slug: slugString });
   const defaultSettings = await getSettings();
 
-  // Use page-specific metadata if available, fallback to default settings
-  const pageTitle = page?.metadata?.metaTitle || page?.title || defaultSettings?.title || 'WBCars';
-  const pageDescription = page?.metadata?.metaDescription || defaultSettings?.description || 'Auto detailing Tarnów';
-  const pageKeywords = page?.metadata?.keywords?.length ? page.metadata.keywords : (defaultSettings?.keywords ?? []);
-  const pageOgImage = page?.metadata?.ogImage || defaultSettings?.openGraphImage;
+  const pageTitle =
+    page?.metadata?.metaTitle ||
+    page?.title ||
+    defaultSettings?.title ||
+    "KSZ — Tworzenie Stron Internetowych";
+  const pageDescription =
+    page?.metadata?.metaDescription ||
+    defaultSettings?.description ||
+    "Tworzymy nowoczesne strony internetowe. Profesjonalne rozwiązania webowe dla Twojego biznesu.";
+  const pageKeywords = page?.metadata?.keywords?.length
+    ? page.metadata.keywords
+    : (defaultSettings?.keywords ?? []);
+  const pageOgImage =
+    page?.metadata?.ogImage || defaultSettings?.openGraphImage;
 
   return {
     metadataBase: defaultSettings?.url ? new URL(defaultSettings?.url) : null,
     title: pageTitle,
     description: pageDescription,
     alternates: {
-      canonical: defaultSettings?.url ? new URL(defaultSettings?.url + slugString) : null,
+      canonical: defaultSettings?.url
+        ? new URL(defaultSettings?.url + slugString)
+        : null,
     },
     keywords: pageKeywords,
-    authors: [{ name: 'Jakub Kosman Software Development' }, { name: 'Wojciech Szmidt' }],
-    robots: page?.metadata?.noIndex ? 'noindex,nofollow' : 'index,follow',
+    authors: [{ name: "KSZ" }],
+    robots: page?.metadata?.noIndex ? "noindex,nofollow" : "index,follow",
     openGraph: {
       title: pageTitle,
       description: pageDescription,
       url: defaultSettings?.url ? defaultSettings.url + slugString : undefined,
-      siteName: 'WBCars',
+      siteName: "KSZ",
       images: [
         {
-          url: urlForImage(pageOgImage)?.src || '/img/opengraph.jpg',
+          url: urlForImage(pageOgImage)?.src || "/img/opengraph.jpg",
           width: 800,
           height: 600,
         },
       ],
-      locale: 'pl_PL',
-      type: 'website',
+      locale: "pl_PL",
+      type: "website",
     },
   };
 }
 
 export default async function Page() {
-  const slugString = '/';
+  const slugString = "/";
 
   const client = getClient();
-  const page = await client.fetch<PageQueryResult>(pageQuery, { slug: slugString });
+  const page = await client.fetch(pageQuery, { slug: slugString });
 
   if (!page) {
     notFound();
   }
 
-  return page.sections && <SanityComponents pageType='page' sanityComponentsData={page.sections} />;
+  return (
+    page.sections && (
+      <SanityComponents pageType="page" sanityComponentsData={page.sections} />
+    )
+  );
 }

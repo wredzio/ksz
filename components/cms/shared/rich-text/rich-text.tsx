@@ -1,9 +1,9 @@
-import { PortableText } from 'next-sanity';
+import { PortableText } from "next-sanity";
 
-import { textComponents } from './text-components';
+import { textComponents } from "./text-components";
 
 interface RichTextProps {
-  value: Parameters<typeof PortableText>[0]['value'];
+  value: Parameters<typeof PortableText>[0]["value"];
 }
 
 export const RichText = (props: RichTextProps) => {

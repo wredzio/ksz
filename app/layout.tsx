@@ -1,21 +1,20 @@
-import './globals.css';
+import "./globals.css";
 
-import React from 'react';
-import type { Metadata } from 'next';
-import { Michroma, Montserrat } from 'next/font/google';
+import React from "react";
+import { DM_Sans, Syne } from "next/font/google";
 
-const montserrat = Montserrat({
-  variable: '--font-montserrat',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  display: 'swap',
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
-const michroma = Michroma({
-  variable: '--font-michroma',
-  subsets: ['latin'],
-  weight: ['400'],
-  display: 'swap',
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -24,8 +23,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='pl'>
-      <body className={`${montserrat.variable} ${michroma.variable} antialiased`}>{children}</body>
+    <html lang="pl">
+      <body className={`${dmSans.variable} ${syne.variable} antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }
