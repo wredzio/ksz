@@ -60,11 +60,14 @@ export const Header = ({ navigationLinks, className }: PageHeaderProps) => {
 
         if (targetElement) {
           const header = document.querySelector("header");
-          const headerHeight = header?.offsetHeight || 0;
+          const headerOffset = header
+            ? header.offsetHeight + header.offsetTop
+            : 0;
           const targetPosition =
             targetElement.getBoundingClientRect().top +
             window.scrollY -
-            headerHeight;
+            headerOffset -
+            16;
 
           window.scrollTo({
             top: targetPosition,
