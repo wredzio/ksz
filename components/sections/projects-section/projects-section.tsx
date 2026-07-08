@@ -51,18 +51,18 @@ export const ProjectsSection = (props: ProjectsSectionProps) => {
                 <Wrapper
                   {...wrapperProps}
                   className={cn(
-                    "group relative block overflow-hidden rounded-xl border border-border bg-card",
+                    "group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card",
                     "transition-all duration-300",
                     "hover:border-primary/50 hover:neon-glow",
                   )}
                 >
                   {/* Image */}
-                  <div className="relative aspect-video overflow-hidden">
+                  <div className="relative aspect-video shrink-0 overflow-hidden">
                     {project.image}
                   </div>
 
                   {/* Content */}
-                  <div className="p-6">
+                  <div className="flex flex-1 flex-col p-6">
                     <h3 className="font-syne mb-2 text-xl font-bold text-foreground">
                       {project.title}
                     </h3>
@@ -72,7 +72,7 @@ export const ProjectsSection = (props: ProjectsSectionProps) => {
 
                     {/* Tags */}
                     {project.tags && project.tags.length > 0 && (
-                      <ul className="flex flex-wrap gap-2">
+                      <ul className="mt-auto flex flex-wrap gap-2">
                         {project.tags.map((tag, tagIndex) => (
                           <li
                             key={tagIndex}
