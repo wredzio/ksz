@@ -438,6 +438,12 @@ export function FloatingLines({
 
     let raf = 0;
     const renderLoop = () => {
+      // Skip all work while the canvas is hidden (e.g. the inactive
+      // light/dark theme variant rendered with display:none)
+      if (renderer.domElement.offsetParent === null) {
+        raf = requestAnimationFrame(renderLoop);
+        return;
+      }
       uniforms.iTime.value = clock.getElapsedTime();
       if (interactive) {
         currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);
