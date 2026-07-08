@@ -1,18 +1,22 @@
-import { Building2, Facebook, Instagram,Mail, PhoneCall } from "lucide-react";
+import { Facebook, Instagram, Mail, PhoneCall } from "lucide-react";
 
 import { Logo } from "@/components/ui/logo/logo";
 
 export interface FooterProps {
   contact: {
-    phone: string;
-    address: string;
-    email: string;
+    phones: string[];
+    emails: string[];
   };
   socialLinks: Array<{
     platform: "Facebook" | "Instagram" | "Twitter" | "Linkedin" | "Youtube";
     url: string;
   }>;
 }
+
+const telHref = (phone: string) => {
+  const digits = phone.replaceAll(" ", "");
+  return `tel:${digits.startsWith("+") ? digits : `+48${digits}`}`;
+};
 
 export function Footer({ contact, socialLinks }: FooterProps) {
   const getSocialIcon = (platform: string) => {
@@ -60,32 +64,41 @@ export function Footer({ contact, socialLinks }: FooterProps) {
                 </div>
 
                 <address className="flex flex-col gap-3 not-italic">
-                  <div className="flex items-center gap-2">
-                    <PhoneCall size={20} className="shrink-0 text-primary/70" aria-hidden="true" />
-                    <p className="font-dm-sans text-sm text-foreground/80">
-                      Telefon: {contact.phone}
-                    </p>
-                  </div>
+                  {contact.phones.map((phone) => (
+                    <div key={phone} className="flex items-center gap-2">
+                      <PhoneCall
+                        size={20}
+                        className="shrink-0 text-primary/70"
+                        aria-hidden="true"
+                      />
+                      <p className="font-dm-sans text-sm text-foreground/80">
+                        <a
+                          href={telHref(phone)}
+                          className="transition-colors hover:text-primary"
+                        >
+                          {phone}
+                        </a>
+                      </p>
+                    </div>
+                  ))}
 
-                  <div className="flex items-center gap-2">
-                    <Building2 size={20} className="shrink-0 text-primary/70" aria-hidden="true" />
-                    <p className="font-dm-sans text-sm text-foreground/80">
-                      Adres: {contact.address}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Mail size={20} className="shrink-0 text-primary/70" aria-hidden="true" />
-                    <p className="font-dm-sans text-sm text-foreground/80">
-                      Mail:{" "}
-                      <a
-                        href={`mailto:${contact.email}`}
-                        className="text-primary underline-offset-2 transition-colors hover:underline"
-                      >
-                        {contact.email}
-                      </a>
-                    </p>
-                  </div>
+                  {contact.emails.map((email) => (
+                    <div key={email} className="flex items-center gap-2">
+                      <Mail
+                        size={20}
+                        className="shrink-0 text-primary/70"
+                        aria-hidden="true"
+                      />
+                      <p className="font-dm-sans text-sm text-foreground/80">
+                        <a
+                          href={`mailto:${email}`}
+                          className="text-primary underline-offset-2 transition-colors hover:underline"
+                        >
+                          {email}
+                        </a>
+                      </p>
+                    </div>
+                  ))}
                 </address>
               </div>
             </div>

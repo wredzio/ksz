@@ -17,9 +17,8 @@ type Story = StoryObj<typeof Footer>;
 export const Default: Story = {
   args: {
     contact: {
-      phone: "+48 123 456 789",
-      address: "Polska",
-      email: "kontakt@ksz.dev",
+      phones: ["515 569 992", "530 096 608"],
+      emails: ["wojciech.szmidt.e@gmail.com", "jkosman95@gmail.com"],
     },
     socialLinks: [
       {
@@ -37,9 +36,8 @@ export const Default: Story = {
 export const SingleSocialLink: Story = {
   args: {
     contact: {
-      phone: "+48 123 456 789",
-      address: "Polska",
-      email: "kontakt@ksz.dev",
+      phones: ["515 569 992", "530 096 608"],
+      emails: ["wojciech.szmidt.e@gmail.com", "jkosman95@gmail.com"],
     },
     socialLinks: [
       {
@@ -53,9 +51,8 @@ export const SingleSocialLink: Story = {
 export const NoSocialLinks: Story = {
   args: {
     contact: {
-      phone: "+48 123 456 789",
-      address: "Polska",
-      email: "kontakt@ksz.dev",
+      phones: ["515 569 992", "530 096 608"],
+      emails: ["wojciech.szmidt.e@gmail.com", "jkosman95@gmail.com"],
     },
     socialLinks: [],
   },
