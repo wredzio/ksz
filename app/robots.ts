@@ -1,5 +1,7 @@
 import type { MetadataRoute } from "next";
 
+import { SITE_URL } from "@/lib/site-config";
+
 export default function robots(): MetadataRoute.Robots {
   const isProd = process.env.VERCEL_ENV === "production";
 
@@ -10,7 +12,7 @@ export default function robots(): MetadataRoute.Robots {
         ...(isProd ? { allow: "/", disallow: ["/studio"] } : { disallow: "/" }), // Disallow all routes for non-production
       },
     ],
-    host: "https://wbcars.pl",
-    sitemap: "https://wbcars.pl/sitemap.xml",
+    host: SITE_URL,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }
