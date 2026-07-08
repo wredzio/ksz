@@ -41,6 +41,7 @@
 
 :root {
   --radius: 0.625rem;
+  color-scheme: light;
 
   /* Light theme */
   --background: 250 250 252;
@@ -64,9 +65,30 @@
 
   --logo-start: #00aa6e;
   --logo-end: #7c3aed;
+
+  /* Opaque on purpose — translucent scrollbar colors get composited over
+     a white base by some Chrome paint paths and read as a white line */
+  --scrollbar-thumb: color-mix(
+    in srgb,
+    rgb(var(--accent)) 45%,
+    rgb(var(--background))
+  );
+  --scrollbar-thumb-hover: color-mix(
+    in srgb,
+    rgb(var(--accent)) 70%,
+    rgb(var(--background))
+  );
+
+  --shadow-neon-glow:
+    0 0 10px rgb(var(--primary) / 0.15), 0 0 20px rgb(var(--primary) / 0.05);
+  --shadow-neon-glow-accent:
+    0 0 10px rgb(var(--accent) / 0.15), 0 0 20px rgb(var(--accent) / 0.05);
+  --shadow-neon-text-glow: none;
 }
 
 .dark {
+  color-scheme: dark;
+
   --background: 10 10 15;
   --foreground: 255 255 255;
   --primary: 0 255 170;
@@ -88,6 +110,24 @@
 
   --logo-start: #00ffaa;
   --logo-end: #8a2be2;
+
+  --scrollbar-thumb: color-mix(
+    in srgb,
+    rgb(var(--primary)) 35%,
+    rgb(var(--background))
+  );
+  --scrollbar-thumb-hover: color-mix(
+    in srgb,
+    rgb(var(--primary)) 60%,
+    rgb(var(--background))
+  );
+
+  --shadow-neon-glow:
+    0 0 15px rgba(0, 255, 170, 0.3), 0 0 30px rgba(0, 255, 170, 0.1);
+  --shadow-neon-glow-accent:
+    0 0 15px rgba(138, 43, 226, 0.3), 0 0 30px rgba(138, 43, 226, 0.1);
+  --shadow-neon-text-glow:
+    0 0 20px rgba(0, 255, 170, 0.5), 0 0 40px rgba(0, 255, 170, 0.2);
 }
 
 @layer base {
@@ -96,9 +136,35 @@
   }
   html {
     scroll-padding-top: 5rem;
+    /* Keep the scrollbar gutter reserved when scroll gets locked
+       (open mobile menu) so fixed elements and content never shift */
+    scrollbar-gutter: stable;
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Global scrollbar styling (Firefox, Chrome 121+, Safari 18.2+) —
+     track painted in the page background so it blends in */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) rgb(var(--background));
+  }
+
+  /* WebKit fallback — thin, rounded, track blends with the background */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgb(var(--background));
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
   }
 
   ::view-transition-old(root),
@@ -154,27 +220,18 @@
     padding-bottom: 211.5578%;
   }
 
-  .neon-glow {
-    box-shadow: 0 0 10px rgb(var(--primary) / 0.15), 0 0 20px rgb(var(--primary) / 0.05);
-  }
+}
 
-  .neon-glow-accent {
-    box-shadow: 0 0 10px rgb(var(--accent) / 0.15), 0 0 20px rgb(var(--accent) / 0.05);
-  }
+/* Neon glow utilities — @utility so variants (hover:, dark:) work in TW4;
+   theme-dependent values live in :root / .dark CSS variables above */
+@utility neon-glow {
+  box-shadow: var(--shadow-neon-glow);
+}
 
-  .neon-text-glow {
-    text-shadow: none;
-  }
+@utility neon-glow-accent {
+  box-shadow: var(--shadow-neon-glow-accent);
+}
 
-  .dark .neon-glow {
-    box-shadow: 0 0 15px rgba(0, 255, 170, 0.3), 0 0 30px rgba(0, 255, 170, 0.1);
-  }
-
-  .dark .neon-glow-accent {
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.3), 0 0 30px rgba(138, 43, 226, 0.1);
-  }
-
-  .dark .neon-text-glow {
-    text-shadow: 0 0 20px rgba(0, 255, 170, 0.5), 0 0 40px rgba(0, 255, 170, 0.2);
-  }
+@utility neon-text-glow {
+  text-shadow: var(--shadow-neon-text-glow);
 }
