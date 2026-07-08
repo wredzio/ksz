@@ -49,6 +49,7 @@ export const InteractiveTerminal = ({
 }: InteractiveTerminalProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const hasInteractedRef = useRef(false);
 
   const isTypingPrompt = currentPrompt.length > 0;
 
@@ -66,8 +67,17 @@ export const InteractiveTerminal = ({
     }
   }, [lines, typedPrompt, showInput]);
 
+  // Re-focus the input between steps, but only once the user has started
+  // interacting — never on initial page load (would scroll to the terminal)
+  useEffect(() => {
+    if (showInput && !isTyping && hasInteractedRef.current) {
+      inputRef.current?.focus({ preventScroll: true });
+    }
+  }, [showInput, isTyping]);
+
   const handleTerminalClick = () => {
     if (showInput && !isTyping) {
+      hasInteractedRef.current = true;
       inputRef.current?.focus();
     }
   };
@@ -78,6 +88,7 @@ export const InteractiveTerminal = ({
     const input = form.elements.namedItem("terminal-input") as HTMLInputElement;
     const value = input.value.trim();
     if (value) {
+      hasInteractedRef.current = true;
       onInput(value);
       input.value = "";
     }
