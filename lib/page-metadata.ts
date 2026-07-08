@@ -44,7 +44,7 @@ export async function buildPageMetadata(slugString: string): Promise<Metadata> {
       siteName: SITE_NAME,
       images: [
         {
-          url: urlForImage(pageOgImage)?.src || "/img/opengraph.jpg",
+          url: urlForImage(pageOgImage)?.src || "/img/opengraph.png",
           width: 1200,
           height: 630,
         },
