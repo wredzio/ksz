@@ -61,6 +61,10 @@ export const HeroSection = (props: HeroSectionProps) => {
       {/* Bottom gradient fade into background */}
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[5] h-32 bg-gradient-to-t from-background to-transparent" />
 
+      {/* Right gradient fade — blends the animated lines into the
+          scrollbar gutter so the track doesn't read as a hard seam */}
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-[5] w-6 bg-gradient-to-l from-background via-background/30 to-transparent" />
+
       {/* Content overlay — pointer-events-none so mouse reaches the canvas */}
       <div className="pointer-events-none relative z-10 flex h-full flex-col items-center justify-center px-4">
         <div className="flex max-w-4xl flex-col items-center gap-8 text-center">
@@ -99,9 +103,11 @@ export const HeroSection = (props: HeroSectionProps) => {
                 }
               }}
               className={cn(
-                "pointer-events-auto font-syne mt-4 inline-flex items-center rounded-full border border-primary px-8 py-3 text-sm font-bold uppercase tracking-wider text-primary",
+                "pointer-events-auto font-syne mt-4 inline-flex items-center rounded-full border px-8 py-3 text-sm font-bold uppercase tracking-wider",
+                "border-accent text-accent dark:border-primary dark:text-primary",
                 "transition-all duration-300",
-                "hover:bg-primary hover:text-primary-foreground hover:neon-glow",
+                "hover:bg-accent hover:text-accent-foreground hover:neon-glow-accent",
+                "dark:hover:bg-primary dark:hover:text-primary-foreground dark:hover:neon-glow",
                 "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
               )}
             >

@@ -21,17 +21,9 @@ export const settingsQuery = defineQuery(`
     description,
     keywords,
     url,
-    phone,
-    address,
-    mail,
+    phones,
+    mails,
     social,
-    openGraphImage,
-    footerImage {
-      ...,
-      image {
-        ...,
-        asset->
-      }
-    }
+    openGraphImage
   }
 `);

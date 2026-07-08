@@ -210,6 +210,24 @@ export type Page = {
   } & TeamSection>;
 };
 
+export type ResponsiveImage = {
+  _type: "responsiveImage";
+  image: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  aspectRatio: "3/4" | "9/16" | "16/9" | "1/1" | "4/3" | "3/2" | "13/5";
+};
+
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -227,10 +245,8 @@ export type Settings = {
       _key: string;
     }>;
   };
-  phone?: string;
-  mail?: string;
-  address?: string;
-  footerImage?: ResponsiveImage;
+  phones?: Array<string>;
+  mails?: Array<string>;
   social?: Array<{
     media?: "Twitter" | "Facebook" | "Instagram" | "Linkedin" | "Youtube";
     url?: string;
@@ -251,24 +267,6 @@ export type Settings = {
     _type: "image";
   };
   privacyPolicy: BlockContentSection;
-};
-
-export type ResponsiveImage = {
-  _type: "responsiveImage";
-  image: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
-  aspectRatio: "3/4" | "9/16" | "16/9" | "1/1" | "4/3" | "3/2" | "13/5";
 };
 
 export type SanityImagePaletteSwatch = {
@@ -389,7 +387,7 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = TeamSection | FaqSection | ProcessSection | ProjectsSection | ServicesSection | AboutSection | SubheadingSection | HeroSection | ContactSection | ContactFormSection | BlockContentSection | ImageSection | Page | Settings | ResponsiveImage | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = TeamSection | FaqSection | ProcessSection | ProjectsSection | ServicesSection | AboutSection | SubheadingSection | HeroSection | ContactSection | ContactFormSection | BlockContentSection | ImageSection | Page | ResponsiveImage | Settings | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/schemas/pages/page.queries.ts
 // Variable: pageQuery
@@ -829,16 +827,15 @@ export type NavigationQueryResult = {
   } | null;
 } | null;
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0] {    _id,    title,    description,    keywords,    url,    phone,    address,    mail,    social,    openGraphImage,    footerImage {      ...,      image {        ...,        asset->      }    }  }
+// Query: *[_type == "settings"][0] {    _id,    title,    description,    keywords,    url,    phones,    mails,    social,    openGraphImage  }
 export type SettingsQueryResult = {
   _id: string;
   title: string | null;
   description: string | null;
   keywords: Array<string>;
   url: string | null;
-  phone: string | null;
-  address: string | null;
-  mail: string | null;
+  phones: Array<string> | null;
+  mails: Array<string> | null;
   social: Array<{
     media?: "Facebook" | "Instagram" | "Linkedin" | "Twitter" | "Youtube";
     url?: string;
@@ -856,39 +853,6 @@ export type SettingsQueryResult = {
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
-  footerImage: {
-    _type: "responsiveImage";
-    image: {
-      asset: {
-        _id: string;
-        _type: "sanity.imageAsset";
-        _createdAt: string;
-        _updatedAt: string;
-        _rev: string;
-        originalFilename?: string;
-        label?: string;
-        title?: string;
-        description?: string;
-        altText?: string;
-        sha1hash?: string;
-        extension?: string;
-        mimeType?: string;
-        size?: number;
-        assetId?: string;
-        uploadId?: string;
-        path?: string;
-        url?: string;
-        metadata?: SanityImageMetadata;
-        source?: SanityAssetSourceData;
-      } | null;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
-    };
-    aspectRatio: "1/1" | "13/5" | "16/9" | "3/2" | "3/4" | "4/3" | "9/16";
-  } | null;
 } | null;
 
 // Query TypeMap
@@ -898,6 +862,6 @@ declare module "@sanity/client" {
     "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    id,\n    title,\n    description,\n    text,\n    subtitle,\n    ctaText,\n    ctaHref,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    _type == 'aboutSection' => {\n      features[]{\n        _key,\n        icon,\n        title,\n        description\n      }\n    },\n    _type == 'servicesSection' => {\n      services[]{\n        _key,\n        title,\n        description,\n        icon\n      }\n    },\n    _type == 'projectsSection' => {\n      projects[]{\n        _key,\n        title,\n        description,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        },\n        url,\n        tags\n      }\n    },\n    _type == 'processSection' => {\n      steps[]{\n        _key,\n        number,\n        title,\n        description\n      }\n    },\n    _type == 'faqSection' => {\n      items[]{\n        _key,\n        question,\n        answer\n      }\n    }\n  }\n}": PageQueryResult;
     "*[_type == \"page\"]{\n  _id,\n  title,\n  slug\n}": AllPagesQueryResult;
     "*[_type == \"settings\"][0]{\n  _id,\n  navigation{\n    navigationLinks[]{\n      label,\n      href,\n      external,\n      order\n    } | order(order asc)\n  }\n}": NavigationQueryResult;
-    "\n  *[_type == \"settings\"][0] {\n    _id,\n    title,\n    description,\n    keywords,\n    url,\n    phone,\n    address,\n    mail,\n    social,\n    openGraphImage,\n    footerImage {\n      ...,\n      image {\n        ...,\n        asset->\n      }\n    }\n  }\n": SettingsQueryResult;
+    "\n  *[_type == \"settings\"][0] {\n    _id,\n    title,\n    description,\n    keywords,\n    url,\n    phones,\n    mails,\n    social,\n    openGraphImage\n  }\n": SettingsQueryResult;
   }
 }

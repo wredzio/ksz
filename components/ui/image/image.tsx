@@ -41,7 +41,8 @@ const sanityLoader = ({
   const image = sanityBuilder
     .image(asset)
     .width(width)
-    .quality(quality || 75);
+    .quality(quality || 75)
+    .auto("format");
 
   if (aspectRatio) {
     image.height(Math.floor(width * aspectRatio)).fit("crop");

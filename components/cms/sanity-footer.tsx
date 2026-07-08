@@ -11,9 +11,8 @@ export function SanityFooter(props: SanityFooterData) {
   return (
     <Footer
       contact={{
-        phone: props.phone || "",
-        address: props.address || "",
-        email: props.mail || "",
+        phones: props.phones?.filter(Boolean) ?? [],
+        emails: props.mails?.filter(Boolean) ?? [],
       }}
       socialLinks={
         props.social
