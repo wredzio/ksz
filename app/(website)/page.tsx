@@ -6,6 +6,10 @@ import { buildPageMetadata } from "@/lib/page-metadata";
 import { getClient } from "@/sanity/sanity.client";
 import { pageQuery } from "@/sanity/schemas/pages/page.queries";
 
+// ISR: re-fetch Sanity content at most once per minute so CMS edits
+// (new projects, copy changes) appear without a manual redeploy
+export const revalidate = 60;
+
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata("/");
 }

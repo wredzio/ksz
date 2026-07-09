@@ -7,6 +7,8 @@ import { SITE_NAME, SITE_URL } from "@/lib/site-config";
 import { getClient } from "@/sanity/sanity.client";
 import { privacyPolicyQuery } from "@/sanity/schemas/settings.queries";
 
+export const revalidate = 60;
+
 export function generateMetadata(): Metadata {
   return {
     metadataBase: new URL(SITE_URL),
