@@ -19,7 +19,7 @@ export const TeamSection = (props: TeamSectionProps) => {
     <div className="px-4 py-16 md:py-24">
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-8 md:flex-row md:gap-12 lg:gap-16">
-          <div className="flex-1 overflow-hidden rounded-2xl border border-border">
+          <div className="flex-1 overflow-hidden rounded-2xl border border-border md:self-center">
             {image}
           </div>
 
