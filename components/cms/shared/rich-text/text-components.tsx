@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { PortableTextComponents } from "next-sanity";
 
 export const textComponents: PortableTextComponents = {
@@ -25,10 +24,15 @@ export const textComponents: PortableTextComponents = {
     ),
   },
   marks: {
-    anchor: ({ children, value }) => (
-      <Link className="font-bold text-primary hover:underline" href={`#`}>
+    link: ({ children, value }) => (
+      <a
+        href={value?.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-bold text-primary hover:underline"
+      >
         {children}
-      </Link>
+      </a>
     ),
     strong: ({ children }) => <strong className="font-bold">{children}</strong>,
     s: ({ children }) => <s className="line-through">{children}</s>,

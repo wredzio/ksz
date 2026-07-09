@@ -13,6 +13,16 @@ export const navigationQuery = defineQuery(`*[_type == "settings"][0]{
   }
 }`);
 
+// Query to fetch the privacy policy rich-text from settings
+export const privacyPolicyQuery = defineQuery(`
+  *[_type == "settings"][0] {
+    privacyPolicy[]{
+      ...,
+      _type == "image" => { ..., asset-> }
+    }
+  }
+`);
+
 // Query to fetch all settings
 export const settingsQuery = defineQuery(`
   *[_type == "settings"][0] {

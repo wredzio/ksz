@@ -826,6 +826,57 @@ export type NavigationQueryResult = {
     }>;
   } | null;
 } | null;
+// Variable: privacyPolicyQuery
+// Query: *[_type == "settings"][0] {    privacyPolicy[]{      ...,      _type == "image" => { ..., asset-> }    }  }
+export type PrivacyPolicyQueryResult = {
+  privacyPolicy: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }>;
+} | null;
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0] {    _id,    title,    description,    keywords,    url,    phones,    mails,    social,    openGraphImage  }
 export type SettingsQueryResult = {
@@ -862,6 +913,7 @@ declare module "@sanity/client" {
     "*[_type == \"page\" && slug.current == $slug][0]{\n  _id,\n  _type,\n  _createdAt,\n  _updatedAt,\n  _rev,\n  title,\n  slug,\n  metadata{\n    metaTitle,\n    metaDescription,\n    keywords,\n    ogImage{\n      ...,\n      asset->\n    },\n    noIndex\n  },\n  sections[]{\n    _key,\n    _type,\n    id,\n    title,\n    description,\n    text,\n    subtitle,\n    ctaText,\n    ctaHref,\n    images[]{\n      ...,\n       image{\n        ...,\n        asset->\n      },\n      asset->,\n      alt,\n      aspectRatio\n    },\n    body[]{\n      ...,\n      _type == 'image' => {\n        ...,\n        asset->\n      }\n    },\n    image{\n      ...,\n      image{\n        ...,\n        asset->\n      },\n      aspectRatio\n    },\n    layout,\n    fullWidth,\n    phone,\n    address,\n    email,\n    _type == 'aboutSection' => {\n      features[]{\n        _key,\n        icon,\n        title,\n        description\n      }\n    },\n    _type == 'servicesSection' => {\n      services[]{\n        _key,\n        title,\n        description,\n        icon\n      }\n    },\n    _type == 'projectsSection' => {\n      projects[]{\n        _key,\n        title,\n        description,\n        image{\n          image{\n            asset->,\n            alt,\n            hotspot\n          },\n          aspectRatio\n        },\n        url,\n        tags\n      }\n    },\n    _type == 'processSection' => {\n      steps[]{\n        _key,\n        number,\n        title,\n        description\n      }\n    },\n    _type == 'faqSection' => {\n      items[]{\n        _key,\n        question,\n        answer\n      }\n    }\n  }\n}": PageQueryResult;
     "*[_type == \"page\"]{\n  _id,\n  title,\n  slug\n}": AllPagesQueryResult;
     "*[_type == \"settings\"][0]{\n  _id,\n  navigation{\n    navigationLinks[]{\n      label,\n      href,\n      external,\n      order\n    } | order(order asc)\n  }\n}": NavigationQueryResult;
+    "\n  *[_type == \"settings\"][0] {\n    privacyPolicy[]{\n      ...,\n      _type == \"image\" => { ..., asset-> }\n    }\n  }\n": PrivacyPolicyQueryResult;
     "\n  *[_type == \"settings\"][0] {\n    _id,\n    title,\n    description,\n    keywords,\n    url,\n    phones,\n    mails,\n    social,\n    openGraphImage\n  }\n": SettingsQueryResult;
   }
 }

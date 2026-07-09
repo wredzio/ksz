@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Mail, PhoneCall } from "lucide-react";
+import Link from "next/link";
 
 import { Logo } from "@/components/ui/logo/logo";
 
@@ -106,10 +107,18 @@ export function Footer({ contact, socialLinks }: FooterProps) {
 
           {/* Bottom Section */}
           <div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-border pt-8 lg:flex-row lg:items-center">
-            <p className="font-dm-sans text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} KSZ. Wszystkie prawa
-              zastrzeżone.
-            </p>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+              <p className="font-dm-sans text-xs text-muted-foreground">
+                &copy; {new Date().getFullYear()} KSZ. Wszystkie prawa
+                zastrzeżone.
+              </p>
+              <Link
+                href="/polityka-prywatnosci"
+                className="font-dm-sans text-xs text-muted-foreground underline-offset-2 transition-colors hover:text-primary hover:underline"
+              >
+                Polityka prywatności
+              </Link>
+            </div>
 
             {/* Social Links */}
             {socialLinks.length > 0 && (
