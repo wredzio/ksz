@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || "https://ksz.pl",
+  siteUrl: process.env.SITE_URL || "https://ksz-web.pl",
   generateRobotsTxt: false, // robots.txt is served by app/robots.ts
   exclude: ["/studio", "*.txt", "*.png", "*.jpg", "*.jpeg", "*.svg"],
   transform: async (config, path) => {
