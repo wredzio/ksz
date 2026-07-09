@@ -34,8 +34,9 @@ export const ProjectsSection = (props: ProjectsSectionProps) => {
           )}
         </div>
 
-        {/* Projects grid */}
-        <ul className="grid grid-cols-1 gap-12 md:grid-cols-2">
+        {/* Projects grid — flex-wrap so a lone last card centers on desktop
+            instead of sticking to the left column */}
+        <ul className="flex flex-col gap-12 md:flex-row md:flex-wrap md:justify-center">
           {projects.map((project, index) => {
             const Wrapper = project.url ? "a" : "div";
             const wrapperProps = project.url
@@ -47,7 +48,7 @@ export const ProjectsSection = (props: ProjectsSectionProps) => {
               : {};
 
             return (
-              <li key={index}>
+              <li key={index} className="md:w-[calc(50%_-_1.5rem)]">
                 <Wrapper
                   {...wrapperProps}
                   className={cn(
