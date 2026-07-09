@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import {
   CONTACT_EMAILS,
@@ -54,6 +55,7 @@ export default async function Layout({ children }: LayoutProps) {
       <SiteLayout.Main>{children}</SiteLayout.Main>
       <SiteLayout.Footer />
       <Analytics />
+      <SpeedInsights />
     </SiteLayout>
   );
 }
